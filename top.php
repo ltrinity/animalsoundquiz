@@ -6,14 +6,9 @@ include "lib/constants.php";
     <head>
         <title>CS 148 Database Design Webpage</title>
         <meta name="author" content="Luke Trinity">
-        <meta name="description" content="List all CS teachers in order of most students taught">
+        <meta name="description" content="Aniamal sound quiz database connection">
         <link href="style.css" rel="stylesheet" type="text/css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <!--[if lt IE 9]>
-        <script src="//html5shim.googlecode.com/sin/trunk/html5.js"></script>
-        <![endif]-->
-
         <?php
         // %^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%
         //
