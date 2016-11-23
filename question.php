@@ -20,13 +20,21 @@ print $correctAnimal[0][0];
 print '.mp3" type="audio/mpeg">';
 print'Your browser does not support the audio element.';
 print '</audio>';
-
-//this code displays an animals photo
-//print '<img src="photos/';
-//print $animal[0];
-//print '.jpg"  class="animal"  alt="';
-//print $animal[0];
-//print '"/>';}
+//this query will get two animals that are not the correct animal
+$getIncorrectAnimalsQuery = "SELECT pmkAnimalName FROM tblAnimals WHERE pmkAnimalName != ? ORDER BY RAND() LIMIT 2";
+$IncorrectAnimalsQueryData = array($correctAnimal[0][0]);
+$incorrectAnimals = $thisDatabaseReader->select($getIncorrectAnimalsQuery,$IncorrectAnimalsQueryData,1,2);
+//create an array of the correct and incorrect animals
+$animalsToDisplay = array($correctAnimal[0][0],$incorrectAnimals[0][0],$incorrectAnimals[1][0]);
+//randomize the array
+shuffle($animalsToDisplay);
+//display each animals photo
+foreach($animalsToDisplay as $animal){
+print '<img src="photos/';
+print $animal;
+print '.jpg"  class="animal"  alt="';
+print $animal;
+print '"/>';}
 //include footer
 include "footer.php";
 ?>
