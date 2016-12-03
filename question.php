@@ -2,25 +2,19 @@
 //initialize database connection
 include "top.php";
 ?>
-<!--show button and hide prompt to select image when user selects an animal-->
+<!--script to show button when an animal is selected
+prompt user to select an animal if they have not-->
 <script>
-    function changer() {
-        document.getElementById("selectAnswer").hidden = "";
-        document.getElementById("hideOnClick").hidden = "hidden";
+    function showhide() {
+        document.getElementById("questionSubmitButton").hidden = "";
+        document.getElementById("promptToPickAnimal").hidden = "hidden";
     }
 </script>
 <?php
-//include navigation page
+//include navigation
 include "nav.php";
-//get the values on form submit
-if (isset($_POST["selectAnswer"])) {
-    //get the values from the form
-    $correctAnswer = htmlentities($_POST["hiddenCorrectAnimal"], ENT_QUOTES, "UTF-8");
-    //get the user answer
-    $chosenAnswer = htmlentities($_POST["animalSelection"], ENT_QUOTES, "UTF-8");
-    //show what was selected and what the correct answer should be
-    print 'Correct answer: ' . $correctAnswer . " Chosen Answer: " . $chosenAnswer;
-}
+############################QUESTION CREATION######################
+//first create a new question
 //select a random animal and insert it into tblQuestions as a foreign key
 $getRightAnswerAnimalIdQuery = "INSERT INTO tblQuestions (fnkRightAnswerAnimalId) SELECT pmkAnimalName FROM tblAnimals ORDER BY RAND() LIMIT 1";
 $thisDatabaseWriter->insert($getRightAnswerAnimalIdQuery, "", 0, 1);
@@ -31,6 +25,7 @@ $lastId = array($lastIdArray[0][0]);
 //get the sound for the current question based on the animal name of the last inserted id
 $getCorrectAnswerAnimalNameQuery = "SELECT fnkRightAnswerAnimalId from tblQuestions WHERE pmkQuestionId = ?";
 $correctAnimal = $thisDatabaseReader->select($getCorrectAnswerAnimalNameQuery, $lastId, 1);
+########################AUDIO#####################################
 //inform user how to hear sound again
 print '<p>Click the play button to hear the sound again </p>';
 //display the sound for the correct animal
@@ -40,31 +35,41 @@ print $correctAnimal[0][0];
 print '.mp3" type="audio/mpeg">';
 print'Your browser does not support the audio element.';
 print '</audio>';
+##########################INCORRECT OPTION DISPLAY#######################################
 //this query will get two animals that are not the correct animal
 $getIncorrectAnimalsQuery = "SELECT pmkAnimalName FROM tblAnimals WHERE pmkAnimalName != ? ORDER BY RAND() LIMIT 2";
 $IncorrectAnimalsQueryData = array($correctAnimal[0][0]);
 $incorrectAnimals = $thisDatabaseReader->select($getIncorrectAnimalsQuery, $IncorrectAnimalsQueryData, 1, 2);
+##############################COMBINE ALL THREE ANIMALS IN ARRAY###########################
 //create an array of the correct and incorrect animals
 $animalsToDisplay = array($correctAnimal[0][0], $incorrectAnimals[0][0], $incorrectAnimals[1][0]);
 //randomize the array
 shuffle($animalsToDisplay);
-//begin form
-print '<form  method = "post" action = "question.php">';
+###########################BEGIN FORM############################################
+print '<form  method = "post" action = "answer.php">';
 //inform user to select an animal
-print '<p id = "hideOnClick">Select an animal</p>';
+print '<p id = "promptToPickAnimal">Select an animal by clicking on a picture</p>';
 //display each animals photo
 foreach ($animalsToDisplay as $animal) {
     print '<label>';
-    print '<input type="radio" name="animalSelection" onclick="changer()" class="none" value = "' . $animal . '"/>';
+    //create a hidden radio button
+    print '<input type="radio" name="animalSelection" onclick="showhide()" class="none" value = "' . $animal . '"/>';
+    //display photo
     print '<img src="photos/' . $animal . '.jpg" class = "animal" id = "hide">';
     print '</label>';
 }
+foreach ($animalsToDisplay as $animal) {
+    print $animal;
+}
+print '<input type="text" name="questionId" onclick="showhide()" class="none" value = "' . $animal . '"/>';
 //print submit button
 print '
     <fieldset class="buttons">
         <legend></legend>
-        <input type="submit" id="selectAnswer" name="selectAnswer" hidden = "hidden" value="Check" tabindex="900" class = "button">
+        <input type="submit" id="questionSubmitButton" name="questionSubmitButton" hidden = "hidden" value="Check" tabindex="900" class = "button">
     </fieldset>';
+//store the prev question id
+print '<input type="text" name="questionIdPrior" hidden = "hidden" value="' . $lastId[0] . '">';
 //store the correct animal in a hidden input
 print '<input type="hidden" name="hiddenCorrectAnimal" value="' . $correctAnimal[0][0] . '">';
 //end form
