@@ -6,3 +6,10 @@
     height: 300px;
     width: 300px;
 }
+.button{
+    width: 1000px;
+    height:100px;
+}
+.none{
+    display:none;
+}
