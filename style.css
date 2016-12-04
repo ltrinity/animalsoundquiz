@@ -5,14 +5,12 @@
 .animal{
     height: 300px;
     width: 300px;
-        background-color: grey;
-}
-.buttons{
-    width: 850px;
+    border-style: solid;
+    border-color: orange;
 }
 .button{
-    width: 800px;
-    height:100px;
+    width: 100px;
+    height:50px;
 }
 .none{
     display:none;
@@ -26,4 +24,19 @@ div.imagetext{
 .textunder{
     display: block;
     font-size:large;
+}
+form{
+    background-color: white;
+    text-align:center;
+}
+li{
+    display: inline;
+    margin:1.5em;
+}
+nav{
+    border-spacing: 20px;
+    text-align:center;
+}
+header{
+    text-align:center;
 }

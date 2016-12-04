@@ -6,15 +6,22 @@ include "top.php";
 prompt user to select an animal if they have not-->
 <script>
     function showhide(element) {
+        //show the submit button
         document.getElementById("questionSubmitButton").hidden = "";
+        //hide the prompt to select an animal
         document.getElementById("promptToPickAnimal").hidden = "hidden";
+        //get the id of the element passed in to the function
+        //use this id to create the id of the label below the image
         var id = element.id
         var label = "label";
         var labelId = id.concat(label);
-        var textarray = document.getElementsByClassName("textunder");
-        textarray[0].style.fontSize = "large";
-        textarray[1].style.fontSize = "large";
-        textarray[2].style.fontSize = "large";
+        //get all the text itmes
+        var textarray = document.getElementsByClassName("textunder");  
+        //make sure the old selection returns to normal size
+        for(var i = 0;i <textarray.length;i++){
+            textarray[i].style.fontSize = "large";
+        }
+        //make the selected animal larger
         document.getElementById(labelId).style.fontSize = "xx-large" ;
     }
 </script>
@@ -70,11 +77,7 @@ foreach ($animalsToDisplay as $animal) {
     print '</div>';
 }
 //print submit button
-print '
-    <fieldset class="buttons">
-        <legend></legend>
-        <input type="submit" id="questionSubmitButton" name="questionSubmitButton" hidden = "hidden" value="Check" tabindex="900" class = "button">
-    </fieldset>';
+print '<input type="submit" id="questionSubmitButton" name="questionSubmitButton" hidden = "hidden" value="Check" tabindex="900" class = "button">';
 //store the prev question id
 print '<input type="text" name="questionIdPrior" hidden = "hidden" value="' . $lastId[0] . '">';
 //store the correct animal in a hidden input
