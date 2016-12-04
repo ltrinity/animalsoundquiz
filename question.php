@@ -51,15 +51,15 @@ print '<form  method = "post" action = "answer.php">';
 print '<p id = "promptToPickAnimal">Select an animal by clicking on a picture</p>';
 //display each animals photo
 foreach ($animalsToDisplay as $animal) {
+    print '<div class="imagetext">';
     print '<label>';
     //create a hidden radio button
     print '<input type="radio" name="animalSelection" onclick="showhide()" class="none" value = "' . $animal . '"/>';
     //display photo
     print '<img src="photos/' . $animal . '.jpg" class = "animal" id = "hide">';
+    print '<span class = "textunder">' . $animal . '</span>';
     print '</label>';
-}
-foreach ($animalsToDisplay as $animal) {
-    print $animal;
+    print '</div>';
 }
 print '<input type="text" name="questionId" onclick="showhide()" class="none" value = "' . $animal . '"/>';
 //print submit button

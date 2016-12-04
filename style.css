@@ -5,14 +5,24 @@
 .animal{
     height: 300px;
     width: 300px;
+        background-color: grey;
+}
+.buttons{
+    width: 850px;
 }
 .button{
-    width: 1000px;
+    width: 800px;
     height:100px;
 }
 .none{
     display:none;
 }
-.inline{
-    display:inline;
+div.imagetext{
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    width: 320px;
+}
+.textunder{
+    display: block;
 }
