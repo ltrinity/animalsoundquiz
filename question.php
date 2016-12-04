@@ -5,9 +5,17 @@ include "top.php";
 <!--script to show button when an animal is selected
 prompt user to select an animal if they have not-->
 <script>
-    function showhide() {
+    function showhide(element) {
         document.getElementById("questionSubmitButton").hidden = "";
         document.getElementById("promptToPickAnimal").hidden = "hidden";
+        var id = element.id
+        var label = "label";
+        var labelId = id.concat(label);
+        var textarray = document.getElementsByClassName("textunder");
+        textarray[0].style.fontSize = "large";
+        textarray[1].style.fontSize = "large";
+        textarray[2].style.fontSize = "large";
+        document.getElementById(labelId).style.fontSize = "xx-large" ;
     }
 </script>
 <?php
@@ -54,14 +62,13 @@ foreach ($animalsToDisplay as $animal) {
     print '<div class="imagetext">';
     print '<label>';
     //create a hidden radio button
-    print '<input type="radio" name="animalSelection" onclick="showhide()" class="none" value = "' . $animal . '"/>';
+    print '<input type="radio" name="animalSelection" onclick="showhide(this)" class="none" value = "' . $animal . '" id = "' . $animal . '"/>';
     //display photo
-    print '<img src="photos/' . $animal . '.jpg" class = "animal" id = "hide">';
-    print '<span class = "textunder">' . $animal . '</span>';
+    print '<img src="photos/' . $animal . '.jpg" class = "animal">';
+    print '<span class = "textunder" id = "'. $animal . 'label">' . $animal . '</span>';
     print '</label>';
     print '</div>';
 }
-print '<input type="text" name="questionId" onclick="showhide()" class="none" value = "' . $animal . '"/>';
 //print submit button
 print '
     <fieldset class="buttons">
