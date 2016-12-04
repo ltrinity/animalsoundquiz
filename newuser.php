@@ -1,30 +1,94 @@
 <?php
-
 //initialize database connection
 include "top.php";
 //include navigation page
 include "nav.php";
-#########################MAKE SURE THE FORM IS CORRECT####################################
+############################SECURITY#############################
+// define security variable
+$yourURL = DOMAIN . PHP_SELF;
+############################INITIALIZE VARIABLES##################
 $firstName = "";
 $lastName = "";
 $email = "";
-//if the form is submitted post the values
+##############################ERRORS###################
+$emailERROR = false;
+$errorMsg = array();
+############################USER INFORMATION###########################
+$mailed = false;
+$messageA = "";
+$messageB = "";
+$messageC = "";
+###############################ON SUBMIT####################
 if (isset($_POST["register"])) {
-    //get the username
+    //get the first name
     $firstName = htmlentities($_POST["firstName"], ENT_QUOTES, "UTF-8");
-    //get the username
+    //get the last name
     $lastName = htmlentities($_POST["lastName"], ENT_QUOTES, "UTF-8");
-    //test if username is already in database
+    //get the email
     $email = htmlentities($_POST["email"], ENT_QUOTES, "UTF-8");
-    //test if user exists
-    $userQuery = 'SELECT pmkUserId FROM tblUsers WHERE fldFirstName LIKE ? AND fldLastName LIKE ? AND fldEmail LIKE ?';
-    $userAttributes = array($firstName, $lastName, $email);
-    $exists = $thisDatabaseReader->select($userQuery, $userAttributes, 1, 2);
-    if ($exists[0][0] == "") {
-        print 'nope';
-    } else {
-        print 'exists';
+    //if they do not enter an email
+    if ($email == "") {
+        $errorMsg[] = "Please enter your email address";
+        $emailERROR = true;
     }
+    //if there is no error
+    if (!$errorMsg) {
+        //test if user exists
+        $userQuery = 'SELECT pmkUserId FROM tblUsers WHERE fldFirstName LIKE ? AND fldLastName LIKE ? AND fldEmail LIKE ?';
+        $userAttributes = array($firstName, $lastName, $email);
+        $exists = $thisDatabaseReader->select($userQuery, $userAttributes, 1, 2);
+        if (!($exists[0][0] == "")) {
+            print 'You have already registered';
+            return;
+        } 
+        //default primary key value
+        $primaryKey = "";
+        //insert the user into the table
+        $createUserQuery = 'INSERT INTO tblUsers SET fldEmail = ?, fldFirstName = ?, fldLastName = ?';
+        $emailArray = array($email);
+        $results = $thisDatabaseWriter->insert($createUserQuery, $emailArray);
+        //get their primary key
+        $primaryKey = $thisDatabaseWriter->lastInsert();
+        //#################################################################
+        // create a key value for confirmation
+        $query = "SELECT fldDateJoined FROM tblUsers WHERE pmkUserId = ? ";
+        $data2 = array($primaryKey);
+        $results = $thisDatabaseReader->select($query, $data2);
+        $dateSubmitted = $results[0]["fldDateJoined"];
+        $key1 = sha1($dateSubmitted);
+        $key2 = $primaryKey;
+        //#################################################################
+        //
+            //Put forms information into a variable to print on the screen
+        //
+
+            $messageA = '<h2>Thank you for registering.</h2>';
+        $messageA .= '<p>Please check your mail for instructions.</p>';
+
+        $messageB = "<p>Click this link to confirm your registration: ";
+        $messageB .= '<a href="http:' . DOMAIN . $PATH_PARTS["dirname"] . '/confirmation.php?q=' . $key1 . '&amp;w=' . $key2 . '">Confirm Registration</a></p>';
+        $messageB .= "<p>or copy and paste this url into a web browser: ";
+        $messageB .= 'http:' . DOMAIN . $PATH_PARTS["dirname"] . '/confirmation.php?q=' . $key1 . '&amp;w=' . $key2 . "</p>";
+
+        $messageC .= "<p><b>Email Address:</b><i>   " . $email . "</i></p>";
+
+        //##############################################################
+        //
+            // email the form's information
+        //
+            $to = $email; // the person who filled out the form
+        $cc = "";
+        $bcc = "";
+        $from = "WRONG site <noreply@yoursite.com>";
+        $subject = "CS 148 registration that i forgot to change text";
+        $message = $messageA . $messageB . $messageC;
+        $mailed = sendMail($to, $cc, $bcc, $from, $subject, $message);
+
+        // remove click to confirm
+        $message = $messageA . $messageC;
+    } //data entered  
+    // end form is valid
+    // ends if form was submitted.
     //show a button that sends user to quiz page passing along their pmk
     //print '<form action="quiz.php" method = "post">'
 }
