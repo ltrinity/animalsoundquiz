@@ -14,11 +14,6 @@
         } else {
             print '<li><a href="er.php">ER Diagram</a></li>';
         }
-        if ($PATH_PARTS['filename'] == "question") {
-            print '<li class="activePage"><a href="question.php">Take a Quiz</a></li>';
-        } else {
-            print '<li><a href="question.php">Take a Quiz</a></li>';
-        }
         ?>
     </ol>
 </nav>

@@ -3,6 +3,8 @@
 include "top.php";
 //include navigation page
 include "nav.php";
+//include mail message
+include "mailmessage.php";
 ############################SECURITY#############################
 // define security variable
 $yourURL = DOMAIN . PHP_SELF;
@@ -45,18 +47,20 @@ if (isset($_POST["register"])) {
         $primaryKey = "";
         //insert the user into the table
         $createUserQuery = 'INSERT INTO tblUsers SET fldEmail = ?, fldFirstName = ?, fldLastName = ?';
-        $emailArray = array($email);
-        $results = $thisDatabaseWriter->insert($createUserQuery, $emailArray);
+        $userAttributes = array($email,$firstName,$lastName);
+        $results = $thisDatabaseWriter->insert($createUserQuery, $userAttributes);
         //get their primary key
         $primaryKey = $thisDatabaseWriter->lastInsert();
         //#################################################################
         // create a key value for confirmation
-        $query = "SELECT fldDateJoined FROM tblUsers WHERE pmkUserId = ? ";
-        $data2 = array($primaryKey);
-        $results = $thisDatabaseReader->select($query, $data2);
-        $dateSubmitted = $results[0]["fldDateJoined"];
+        //$query = "SELECT fldDateJoined FROM tblUsers WHERE pmkUserId = ? ";
+        //$data2 = array($primaryKey);
+        //$results = $thisDatabaseReader->select($query, $data2);
+        //$dateSubmitted = $results[0]["fldDateJoined"];
+        $dateSubmitted = 126;
         $key1 = sha1($dateSubmitted);
         $key2 = $primaryKey;
+        print $key1;
         //#################################################################
         //
             //Put forms information into a variable to print on the screen
@@ -86,6 +90,12 @@ if (isset($_POST["register"])) {
 
         // remove click to confirm
         $message = $messageA . $messageC;
+        print '<form method = "post" action="quiz.php">';
+        //store the prev id
+print '<input type="text" name="pmkUserId" hidden = "hidden" value="' . $primaryKey . '">';
+        //print submit button
+print '<input type="submit" id="quiz" name="quiz" value="Quiz" tabindex="900" class = "button">';
+print '</form>';
     } //data entered  
     // end form is valid
     // ends if form was submitted.
@@ -93,7 +103,7 @@ if (isset($_POST["register"])) {
     //print '<form action="quiz.php" method = "post">'
 }
 ################################FORM TO CREATE NEW USER###############################
-print '<form method = "post" action="index.php">';
+print '<form method = "post" action="newuser.php">';
 print '<p>Enter your first name</p>';
 print '<input id="firstName" maxlength="45" name="firstName" onfocus=this.select() type="text" value="' . $firstName . '">';
 print '<p>Enter your last name</p>';
