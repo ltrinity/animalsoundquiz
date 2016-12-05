@@ -19,6 +19,17 @@ if (isset($_POST["existinglogin"])) {
     $pmkUserId = $thisDatabaseReader->select($getuserIdQuery, $userAttributes, 1,2);
     print $pmkUserId[0][0];
 }
-//show quizzes taken and results, start a new quiz and and redirect to question page
+##############################FORM#######################################
+print '<form  method = "post" action = "question.php">';
+print '<p>Enter your quiz name</p>';
+print '<input id="quizName" maxlength="45" name="quizName" onfocus=this.select() type="text">';
+
+//store the user pmk in a hidden input
+print '<input type="hidden" name="pmkUserId" value="' . $primaryKey . '">';
+//print submit button
+print '<input type="submit" id="quizSubmit" name="quizSubmit" value="Start a Quiz" tabindex="900" class = "button">';
+//end form
+print '</form>';
+##########################FORM TO CREATE A QUIZ###################################
 include "footer.php";
 ?>

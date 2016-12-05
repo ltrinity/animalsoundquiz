@@ -28,6 +28,26 @@ prompt user to select an animal if they have not-->
 <?php
 //include navigation
 include "nav.php";
+##################################THIS CODE WILL BE RUN WHEN A USER STARTS A QUIZ FROM quiz.php############
+//if the form is submitted post the values
+if (isset($_POST["quizSubmit"])) {
+    //get the pmk
+    $userPrimaryKey = htmlentities($_POST["pmkUserId"], ENT_QUOTES, "UTF-8");
+    //get the quiz name
+    $quizName = htmlentities($_POST["quizName"], ENT_QUOTES, "UTF-8");
+    $quizArray = array($quizName);
+##########################INSERT INTO TBLQUIZZES#######################
+#//insert into tblQuizze new quiz
+    $storeUserSelectionQuery = 'INSERT INTO tblQuizzes SET fldQuizName = ?';
+    $thisDatabaseWriter->insert($storeUserSelectionQuery, $quizArray);
+    //get the last ID created
+    $getLastInsertionIdQuery = "SELECT LAST_INSERT_ID() FROM tblQuizzes LIMIT 1";
+    $lastIdArray = $thisDatabaseWriter->select($getLastInsertionIdQuery, "", 0);
+    $lastQuizId = $lastIdArray[0][0];
+########################INSERT INTO TBLUSERSQUIZZES###############
+    $userQuizInsertionQuery = "INSERT INTO tblUsersQuizzes SET fnkUserId = ?, fnkQuizId = ?";
+    $userQuizAttributes = array($userPrimaryKey,$lastQuizId);
+$thisDatabaseWriter->insert($userQuizInsertionQuery, $userQuizAttributes);}
 ############################QUESTION CREATION######################
 //first create a new question
 //select a random animal and insert it into tblQuestions as a foreign key
@@ -82,6 +102,10 @@ print '<input type="submit" id="questionSubmitButton" name="questionSubmitButton
 print '<input type="text" name="questionIdPrior" hidden = "hidden" value="' . $lastId[0] . '">';
 //store the correct animal in a hidden input
 print '<input type="hidden" name="hiddenCorrectAnimal" value="' . $correctAnimal[0][0] . '">';
+//store the user pmk in a hidden input
+print '<input type="hidden" name="userPMK" value="' . $userPrimaryKey . '">';
+//store the quiz id in a hidden input
+print '<input type="hidden" name="quizPMK" value="' . $lastQuizId . '">';
 //end form
 print '</form>';
 //include footer
