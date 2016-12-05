@@ -20,6 +20,19 @@ if (isset($_POST["existinglogin"])) {
     $pmkUserId = $thisDatabaseReader->select($getuserIdQuery, $userAttributes, 1,2);
     $userPrimaryKey = $pmkUserId[0][0];
 }
+//we are going to display the information available about the current user
+$userAttributesQuery = 'SELECT fldFirstName,fldLastName,fnkFavoriteAnimalName,fldEmail, fldDateJoined, fldLevel FROM tblUsers WHERE pmkUserId = ?';
+//store the primary key in an array
+$pmkArray = array($userPrimaryKey);
+$userAttributes = $thisDatabaseReader->select($userAttributesQuery, $pmkArray, 1);
+//display their information
+print '<p>First Name: ' . $userAttributes[0]['fldFirstName'] . '</p>';
+print '<p>Last Name: ' . $userAttributes[0]['fldLastName'] . '</p>';
+print '<p>Email: ' . $userAttributes[0]['fldEmail'] . '</p>';
+print '<p>Account Created: ' . $userAttributes[0]['fldDateJoined'] . '</p>';
+print '<p>Favorite Animal</p>';
+//display photo
+print '<img src="photos/' .  $userAttributes[0]['fnkFavoriteAnimalName'] . '.jpg" class = "animal">';
 //begin form
 print '<form  method = "post" action = "question.php">';
 //let user choose name of quiz

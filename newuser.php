@@ -12,6 +12,7 @@ $yourURL = DOMAIN . PHP_SELF;
 $firstName = "";
 $lastName = "";
 $email = "";
+$favoriteAnimal = "";
 $mailed = false;
 $messageA = "";
 $messageB = "";
@@ -27,6 +28,8 @@ if (isset($_POST["register"])) {
     $lastName = htmlentities($_POST["lastName"], ENT_QUOTES, "UTF-8");
     //get the email
     $email = htmlentities($_POST["email"], ENT_QUOTES, "UTF-8");
+    //get the email
+    $favoriteAnimal = htmlentities($_POST["favoriteAnimal"], ENT_QUOTES, "UTF-8");
     //if they do not enter an email
     if ($email == "") {
         $errorMsg[] = "Please enter your email address";
@@ -46,8 +49,8 @@ if (isset($_POST["register"])) {
         //default primary key value
         $userPrimaryKey = "";
         //insert the user into the table
-        $createUserQuery = 'INSERT INTO tblUsers SET fldEmail = ?, fldFirstName = ?, fldLastName = ?';
-        $userAttributes = array($email, $firstName, $lastName);
+        $createUserQuery = 'INSERT INTO tblUsers SET fldEmail = ?, fldFirstName = ?, fldLastName = ?, fnkFavoriteAnimalName = ?';
+        $userAttributes = array($email, $firstName, $lastName, $favoriteAnimal);
         $results = $thisDatabaseWriter->insert($createUserQuery, $userAttributes);
         //get their primary key
         $userPrimaryKey = $thisDatabaseWriter->lastInsert();
@@ -103,6 +106,30 @@ print '<p>Enter your last name</p>';
 print '<input id="lastName" maxlength="45" name="lastName" onfocus=this.select() type="text" value="' . $lastName . '">';
 print '<p>Enter your email</p>';
 print '<input id="email" maxlength="45" name="email" onfocus=this.select() type="text" value="' . $email . '">';
+//query to select distinct animal names from tblAnimals
+$distinctAnimalQuery = 'SELECT DISTINCT pmkAnimalName FROM tblAnimals';
+$animals = $thisDatabaseReader->select($distinctAnimalQuery, "", 0);
+print '<select name="favoriteAnimal">';
+            if (is_array($animals)) {
+                print '<option';
+                //get selected to preserve from previous submission
+                if ("" == $favoriteAnimal) {
+                    print ' selected="selected"';
+                }
+                print ' value ="">Choose your favorite animal</option>';
+                foreach ($animals as $animal) {
+                    print '<option';
+                    if ($animal[0] == $favoriteAnimal) {
+                        print ' selected="selected"';
+                    }
+                    print ' value = "';
+                    print $animal[0];
+                    print '">';
+                    print $animal[0];
+                    print '</option>';
+                }
+            }
+        print '</select>';
 //print submit button
 print '<input type="submit" id="register" name="register" value="Register" tabindex="900" class = "button">';
 //end the form
