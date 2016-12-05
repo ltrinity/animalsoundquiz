@@ -38,7 +38,7 @@ if (isset($_POST["newquestion"])) {
 //when the user starts a new quiz
 if (isset($_POST["quizSubmit"])) {
     //get the pmk
-    $userPrimaryKey = htmlentities($_POST["pmkUserId"], ENT_QUOTES, "UTF-8");
+    $userPrimaryKey = htmlentities($_POST["userPrimaryKey"], ENT_QUOTES, "UTF-8");
     //get the quiz name
     $quizName = htmlentities($_POST["quizName"], ENT_QUOTES, "UTF-8");
     $quizArray = array($quizName);

@@ -22,8 +22,22 @@ if (isset($_POST["questionSubmitButton"])) {
     //insert into tblQuizzesQuestions what the user chose
     $storeUserSelectionQuery2 = "INSERT INTO tblQuizzesQuestions (`fnkQuizId`, `fnkQuestionId`, `fnkUserChoseAnimalName`, `fldTimeToAnswer`) VALUES (?, ?, ?, NULL)";
     $thisDatabaseWriter->insert($storeUserSelectionQuery2, $userSelection, 0);
-    #################CALCULATE HOW MANY QUESTIONS HAVE BEEN ASKED IN THE CURRENT QUIZ
-}
+    //get the previous number of questions and correct answers
+    $getQuizStatusQuery = 'SELECT fldTotalQuestions,fldNumberCorrect FROM tblUsersQuizzes WHERE fnkUserId = ? AND fnkQuizId = ?';
+    $userquizarray = array($userPrimaryKey,$quizPrimaryKey);
+    $totals = $thisDatabaseReader->select($getQuizStatusQuery, $userquizarray, 1,1);
+    //increment number of questions
+    $totalQuestions = $totals[0][0]+1;
+    //check if answer is correct and increment number correct if necessary
+    if($correctAnswer == $chosenAnswer){
+    $numberCorrect = $totals[0][1]+ 1;}
+    else{
+    $numberCorrect = $totals[0][1];}
+    $updateUserQuizData = array($totalQuestions,$numberCorrect, $userPrimaryKey,$quizPrimaryKey);
+    //we will now update tblUsersQuizzes
+    $updateNumberQuestionsQuery = 'UPDATE tblUsersQuizzes SET fldTotalQuestions = ?, fldNumberCorrect = ? WHERE fnkUserId = ? AND fnkQuizId = ?';
+    $thisDatabaseWriter->update($updateNumberQuestionsQuery, $updateUserQuizData, 1,1);
+    }
 //begin form to start new question
 print '<form  method = "post" action = "question.php">';
 //store the user pmk in a hidden input

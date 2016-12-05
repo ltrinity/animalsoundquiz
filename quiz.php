@@ -30,7 +30,7 @@ print '<p>First Name: ' . $userAttributes[0]['fldFirstName'] . '</p>';
 print '<p>Last Name: ' . $userAttributes[0]['fldLastName'] . '</p>';
 print '<p>Email: ' . $userAttributes[0]['fldEmail'] . '</p>';
 print '<p>Account Created: ' . $userAttributes[0]['fldDateJoined'] . '</p>';
-print '<p>Favorite Animal</p>';
+print '<p>Level: ' . $userAttributes[0]['fldLevel'] . '</p>';
 //display photo
 print '<img src="photos/' .  $userAttributes[0]['fnkFavoriteAnimalName'] . '.jpg" class = "animal">';
 //begin form
