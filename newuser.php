@@ -66,9 +66,9 @@ if (isset($_POST["register"])) {
         $messageA .= '<p>Please check your mail for instructions.</p>';
 
         $messageB = "<p>Click this link to confirm your registration: ";
-        $messageB .= '<a href="http:' . DOMAIN . $PATH_PARTS["dirname"] . '/confirmation.php?q=' . $key1 . '&amp;w=' . $key2 . '">Confirm Registration</a></p>';
+        $messageB .= '<a href="http:' . DOMAIN . $PATH_PARTS["dirname"] . '/confirmationCode.php?q=' . $key1 . '&amp;w=' . $key2 . '">Confirm Registration</a></p>';
         $messageB .= "<p>or copy and paste this url into a web browser: ";
-        $messageB .= 'http:' . DOMAIN . $PATH_PARTS["dirname"] . '/confirmation.php?q=' . $key1 . '&amp;w=' . $key2 . "</p>";
+        $messageB .= 'http:' . DOMAIN . $PATH_PARTS["dirname"] . '/confirmationCode.php?q=' . $key1 . '&amp;w=' . $key2 . "</p>";
 
         $messageC .= "<p><b>Email Address:</b><i>   " . $email . "</i></p>";
 

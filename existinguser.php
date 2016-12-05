@@ -22,4 +22,3 @@ print '</form>';
 //include footer
 include "footer.php";
 ?>
-?>

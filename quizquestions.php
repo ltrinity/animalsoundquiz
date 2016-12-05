@@ -30,3 +30,11 @@ if(is_array($questions)){
         }
     }
 }
+//begin form
+        print '<form  method = "post" action = "quiz.php">';
+        //store the user pmk in a hidden input
+        print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
+        //print submit button
+        print '<input type="submit" id="quiz" name="quiz" value="Return to the user profile page" tabindex="900" class = "button">';
+        //end form
+        print '</form>';
