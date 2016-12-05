@@ -15,8 +15,15 @@ if (isset($_POST["questionSubmitButton"])) {
     $userPrimaryKey = htmlentities($_POST["userPrimaryKey"], ENT_QUOTES, "UTF-8");
     //get quiz Id
     $quizPrimaryKey = htmlentities($_POST["quizPrimaryKey"], ENT_QUOTES, "UTF-8");
-    //show what was selected and what the correct answer should be
-    print 'Correct answer: ' . $correctAnswer . " Chosen Answer: " . $chosenAnswer;
+    if($correctAnswer == $chosenAnswer){
+        print 'Correct! That was the sound of a ' . $correctAnswer;
+        //display photo
+        print '<img src="photos/' . $correctAnswer . '.jpg" class = "animal">';
+    } else{
+        print 'Incorrect! The answer was ' . $correctAnswer;
+        //display photo
+        print '<img src="photos/' . $correctAnswer . '.jpg" class = "animal">';
+    }
     //form data array for quiz question query
     $userSelection = array($quizPrimaryKey, $priorQuestionId, $chosenAnswer);
     //insert into tblQuizzesQuestions what the user chose
@@ -46,6 +53,14 @@ print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '
 print '<input type="hidden" name="quizPrimaryKey" value="' . $quizPrimaryKey . '">';
 //print submit button
 print '<input type="submit" id="newquestion" name="newquestion" value="Next Question" tabindex="900" class = "button">';
+//end form
+print '</form>';
+//begin form to end quiz
+print '<form  method = "post" action = "quiz.php">';
+//store the user pmk in a hidden input
+print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
+//print submit button
+print '<input type="submit" id="endquiz" name="endquiz" value="End Quiz" tabindex="900" class = "button">';
 //end form
 print '</form>';
 //include footer
