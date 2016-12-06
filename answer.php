@@ -44,6 +44,17 @@ if (isset($_POST["questionSubmitButton"])) {
     //we will now update tblUsersQuizzes
     $updateNumberQuestionsQuery = 'UPDATE tblUsersQuizzes SET fldTotalQuestions = ?, fldNumberCorrect = ? WHERE fnkUserId = ? AND fnkQuizId = ?';
     $thisDatabaseWriter->update($updateNumberQuestionsQuery, $updateUserQuizData, 1,1);
+    //check for level up
+    $pmkArray = array($userPrimaryKey);
+    //get the quizzes the current user has taken
+    $quizInformationQuery = 'SELECT SUM(fldNumberCorrect) FROM tblUsersQuizzes JOIN tblQuizzes ON pmkQuizId = fnkQuizId WHERE fnkUserId = ?';
+    $quizzes = $thisDatabaseReader->select($quizInformationQuery, $pmkArray, 1);
+    if($quizzes[0]['SUM(fldNumberCorrect)'] == 5){
+        print '<p>Level Up! Get ready to test your knowledge of big cats.</p>';
+        //we will now update tblUsers
+        $updateLevelQuery = 'UPDATE tblUsers SET fldLevel = 2 WHERE pmkUserId = ?';
+        $thisDatabaseWriter->update($updateLevelQuery, $pmkArray, 1);
+    }
     }
 //begin form to start new question
 print '<form  method = "post" action = "question.php">';
