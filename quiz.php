@@ -1,5 +1,7 @@
 <?php
 include "top.php";
+////include mail message function
+include "mailmessage.php";
 //error from existing user page if they dont exist
 $existsError = false;
 //if the form is submitted on the new user page post the value
@@ -13,13 +15,13 @@ if (isset($_POST["endquiz"])) {
     $userPrimaryKey = htmlentities($_POST["userPrimaryKey"], ENT_QUOTES, "UTF-8");
 }
 //if the form is submitted on the existing user page get the pmk
-if (isset($_POST["existinglogin"])) {
+if (isset($_GET["register"])) {
     //get the first name
-    $firstName = htmlentities($_POST["firstName"], ENT_QUOTES, "UTF-8");
+    $firstName = htmlentities($_GET["firstName"], ENT_QUOTES, "UTF-8");
     //get the last name
-    $lastName = htmlentities($_POST["lastName"], ENT_QUOTES, "UTF-8");
+    $lastName = htmlentities($_GET["lastName"], ENT_QUOTES, "UTF-8");
     //get the email
-    $email = htmlentities($_POST["email"], ENT_QUOTES, "UTF-8");
+    $email = htmlentities($_GET["email"], ENT_QUOTES, "UTF-8");
     //get the primary key of this user
     $getuserIdQuery = 'SELECT pmkUserId from tblUsers WHERE fldFirstName = ? AND fldLastName = ? AND fldEmail = ?';
     $userAttributes = array($firstName, $lastName, $email);
@@ -27,22 +29,30 @@ if (isset($_POST["existinglogin"])) {
     $userPrimaryKey = $pmkUserId[0][0];
     if($userPrimaryKey==""){
         $existsError = true;
-        print '<p><a href="newuser.php">A user does not exist with this information. Click here to register.</a></p>';
-        print '<p><a href="existinguser.php">Click here to retry login.</a></p>';
+        print '<p><a href="login.php">An error occurred, click here to return.</a></p>';
     }
 }
 if(!$existsError){
 //we are going to display the information available about the current user
-$userAttributesQuery = 'SELECT fldFirstName,fldLastName,fnkFavoriteAnimalName,fldEmail, fldDateJoined, fldLevel FROM tblUsers WHERE pmkUserId = ?';
+$userAttributesQuery = 'SELECT fldFirstName,fldLastName,fnkFavoriteAnimalName,fldEmail, fldDateJoined, fldLevel, fldConfirmed, fldApproved FROM tblUsers WHERE pmkUserId = ?';
 //store the primary key in an array
 $pmkArray = array($userPrimaryKey);
 $userAttributes = $thisDatabaseReader->select($userAttributesQuery, $pmkArray, 1);
 //display their information
-print '<p>First Name: ' . $userAttributes[0]['fldFirstName'] . '</p>';
-print '<p>Last Name: ' . $userAttributes[0]['fldLastName'] . '</p>';
-print '<p>Email: ' . $userAttributes[0]['fldEmail'] . '</p>';
-print '<p>Account Created: ' . $userAttributes[0]['fldDateJoined'] . '</p>';
-print '<p>Level: ' . $userAttributes[0]['fldLevel'] . '</p>';
+print '<p class ="moderate">' . $userAttributes[0]['fldFirstName'] .  $userAttributes[0]['fldLastName'] . '</p>';
+print '<p class = "moderate">Email: ' . $userAttributes[0]['fldEmail'] . '</p>';
+print '<p class = "moderate">Account Created: ' . $userAttributes[0]['fldDateJoined'] . '</p>';
+print '<p class = "moderate">Level: ' . $userAttributes[0]['fldLevel'] . '</p>';
+if($userAttributes[0]['fldConfirmed']==1){
+    print '<p class = "moderate">Confirmed: Yes</p>';
+} else {
+    print '<p class = "moderate">Confirmed: No</p>';
+}
+if( $userAttributes[0]['fldApproved']==1){
+    print '<p class = "moderate">Approved: Yes</p>';
+} else{
+    print '<p class = "moderate">Approved: No</p>';
+}
 //display photo
 print '<img src="photos/' . $userAttributes[0]['fnkFavoriteAnimalName'] . '.jpg" class = "animal">';
 //get the quizzes the current user has taken

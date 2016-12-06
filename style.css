@@ -1,6 +1,10 @@
+.error{
+    font-size:20px;
+    color:red;
+}
 #er{
-    height: 800px;
-    width: 2400px;
+    height: 600px;
+    width: 1200px;
 }
 .animal{
     height: 300px;
@@ -32,7 +36,7 @@ form{
 }
 li{
     display: inline;
-    margin:5px;
+    margin:20px;
 }
 
 body{
@@ -62,7 +66,7 @@ header {
     background-repeat: no-repeat, no-repeat, no-repeat;
     text-shadow: 0px -2px black;
 }
-.indexp{
+.moderate{
     font-size: 20px;
 }
 a{
@@ -74,4 +78,14 @@ a:hover{
 }
 ol{
     padding: 0px;
+        border:2px solid white;
+}
+nav{
+    background-color:grey;
+    width:200px;
+    margin:auto;
+
+}
+#register{
+    display:block;
 }
