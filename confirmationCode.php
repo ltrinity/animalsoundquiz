@@ -79,8 +79,8 @@ if (isset($_GET["q"])) {
         $to = "ltrinity@uvm.edu";
         $cc = "";
         $bcc = "";
-        $from = "WRONG site <noreply@yoursite.com>";
-        $subject = "New PLH Camp Membership Confirmed: Approve?";
+        $from = "Animal Sound Quiz<animalsoundquiz@gmail.com>";
+        $subject = "New Animal Sound Quiz Registration Confirmed: Approve?";
 
         $mailed = sendMail($to, $cc, $bcc, $from, $subject, $AdminMessage);
         
@@ -90,18 +90,18 @@ if (isset($_GET["q"])) {
             $to = $email;
             $cc = "";
             $bcc = "";
-            $from = "WRONG site <noreply@yoursite.com>";
-            $subject = "Bobs PLH Registration Confirmed";
-            $UserMessage = "<p>Thank you for taking the time to confirm your registration. Once your membership has been approved we look forward to sending you junk mail. Your registration has been sent to the staff for approval. You should hear back from us within the next week. Grader please mark me wrong for not changing this.</p>";
+            $from = "Animal Sound Quiz <animalsoundquiz@gmail.com>";
+            $subject = "Animal Sound Quiz Registration Confirmed";
+            $UserMessage = "<p>Thank you for taking the time to confirm your registration. </p>";
 
             $mailed = sendMail($to, $cc, $bcc, $from, $subject, $UserMessage);
 
         } else {
             // update failed
-            $UserMessage = "<p>I am sorry but this project cannot be confirmed at this time. Please call (802) 656-1234 for help in resolving this matter.</p>";
+            $UserMessage = "<p>I am sorry but this project cannot be confirmed at this time. Please contact ltrinity@uvm.edu for help in resolving this matter.</p>";
         }
     } else {
-        $UserMessage = "<p>I am sorry but this project cannot be confirmed at this time. Please call (802) 656-1234 for help in resolving this matter.</p>";
+        $UserMessage = "<p>I am sorry but this project cannot be confirmed at this time. Please contact ltrinity@uvm.edu for help in resolving this matter.</p>";
     } // keys equal
 } // ends isset get q
 

@@ -50,3 +50,10 @@ fldSoundName varchar(15) NOT NULL,
 fldDifficulty int(2) NOT NULL,
 CONSTRAINT pmkSoundId PRIMARY KEY(fnkAnimalName,fldSoundName))
 
+CREATE TABLE IF NOT EXISTS tblAnimalsAnimals(
+fnkFirstAnimalName varchar(15) NOT NULL,
+fnkSecondAnimalName varchar(15) NOT NULL,
+fldDifficulty int(2) NOT NULL,
+CONSTRANT pmkAnimalAnimalId PRIMARY KEY (fnkFirstAnimalName,fnkSecondAnimalName,fldDifficulty)
+)
+

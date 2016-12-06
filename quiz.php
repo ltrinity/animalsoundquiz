@@ -1,7 +1,8 @@
 <?php
-
 include "top.php";
 include "nav.php";
+//error from existing user page if they dont exist
+$existsError = false;
 //if the form is submitted on the new user page post the value
 if (isset($_POST["quiz"])) {
     //get the user id for a new user
@@ -25,7 +26,13 @@ if (isset($_POST["existinglogin"])) {
     $userAttributes = array($firstName, $lastName, $email);
     $pmkUserId = $thisDatabaseReader->select($getuserIdQuery, $userAttributes, 1, 2);
     $userPrimaryKey = $pmkUserId[0][0];
+    if($userPrimaryKey==""){
+        $existsError = true;
+        print '<p><a href="newuser.php">A user does not exist with this information. Click here to register.</a></p>';
+        print '<p><a href="existinguser.php">Click here to retry login.</a></p>';
+    }
 }
+if(!$existsError){
 //we are going to display the information available about the current user
 $userAttributesQuery = 'SELECT fldFirstName,fldLastName,fnkFavoriteAnimalName,fldEmail, fldDateJoined, fldLevel FROM tblUsers WHERE pmkUserId = ?';
 //store the primary key in an array
@@ -77,7 +84,7 @@ print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '
 //print submit button
 print '<input type="submit" id="quizSubmit" name="quizSubmit" value="Start a Quiz" tabindex="900" class = "button">';
 //end form
-print '</form>';
+print '</form>';}
 //footer
 include "footer.php";
 ?>

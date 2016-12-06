@@ -28,13 +28,13 @@ if (isset($_GET["q"])) {
 
     if ($approved) {
         $to = $user[0]["fldEmail"];
-        $subject = "PLH Registration Approved: " . $todaysDate;
+        $subject = "Animal Sound Quiz Registration Approved: " . $todaysDate;
 
-        $UserMessage = "<p>Thank you for being part of the Peace Love and Happyness camp. Your registration has been approved. We will be in contact with you shortly.</p>";
+        $UserMessage = "<p>Thank you for being part of the Animal Sound Quiz website. Your registration has been approved. We will be in contact with you shortly.</p>";
         $UserMessage .= '<p><strong>Again thank you,</p>';
-        $UserMessage .= '<p><strong>PLH Camp Staff</strong></p>';
+        $UserMessage .= '<p><strong>Luke Trinity</strong></p>';
     } else {
-        $UserMessage = "<p>I am sorry but this registration cannot be approved at this time. Please call (802) 656 - 1234 for help in resolving this matter.</p>";
+        $UserMessage = "<p>I am sorry but this registration cannot be approved at this time. Please email ltrinity@uvm.edu for help in resolving this matter.</p>";
     }
 
 //############################################################################
@@ -54,7 +54,7 @@ if (isset($_GET["q"])) {
 
     $cc = "";
     $bcc = "";
-    $from = "PLH Staff <plh@yoursite.com>";
+    $from = "Luke Trinity<animalsoundquiz@gmail.com>";
 
     $mailed = sendMail($to, $cc, $bcc, $from, $subject, $UserMessage);
     print "<p>";

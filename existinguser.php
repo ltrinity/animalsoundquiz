@@ -3,11 +3,11 @@
 include "top.php";
 //include navigation page
 include "nav.php";
-############################INITIALIZE VARIABLES##################
+//initialize variables
 $firstName = "";
 $lastName = "";
 $email = "";
-################################FORM TO CREATE NEW USER###############################
+//begin form
 print '<form method = "post" action="quiz.php">';
 print '<p>Enter your first name</p>';
 print '<input id="firstName" maxlength="45" name="firstName" onfocus=this.select() type="text" value="' . $firstName . '">';
