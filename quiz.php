@@ -1,6 +1,5 @@
 <?php
 include "top.php";
-include "nav.php";
 //error from existing user page if they dont exist
 $existsError = false;
 //if the form is submitted on the new user page post the value

@@ -1,8 +1,6 @@
 <?php
 //initialize database connection
 include "top.php";
-//include navigation page
-include "nav.php";
 //initialize variables
 $firstName = "";
 $lastName = "";

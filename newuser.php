@@ -2,8 +2,6 @@
 
 //initialize database connection
 include "top.php";
-//include navigation page
-include "nav.php";
 //include mail message function
 include "mailmessage.php";
 // define security variable

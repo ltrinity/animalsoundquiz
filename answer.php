@@ -1,8 +1,6 @@
 <?php
 //include top
 include "top.php";
-//includ nav
-include "nav.php";
 //if the form is submitted post the values
 if (isset($_POST["questionSubmitButton"])) {
     //get the correct Answer
@@ -53,6 +51,12 @@ if (isset($_POST["questionSubmitButton"])) {
         print '<p>Level Up! Get ready to test your knowledge of big cats.</p>';
         //we will now update tblUsers
         $updateLevelQuery = 'UPDATE tblUsers SET fldLevel = 2 WHERE pmkUserId = ?';
+        $thisDatabaseWriter->update($updateLevelQuery, $pmkArray, 1);
+    }
+    if($quizzes[0]['SUM(fldNumberCorrect)'] == 10){
+        print '<p>Level Up! Get ready to test your knowledge of birds.</p>';
+        //we will now update tblUsers
+        $updateLevelQuery = 'UPDATE tblUsers SET fldLevel = 3 WHERE pmkUserId = ?';
         $thisDatabaseWriter->update($updateLevelQuery, $pmkArray, 1);
     }
     }

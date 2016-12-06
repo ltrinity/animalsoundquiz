@@ -26,8 +26,6 @@ prompt user to select an animal if they have not-->
     }
 </script>
 <?php
-//include navigation
-include "nav.php";
 //when the user is sent from the answer page to get a new question
 if (isset($_POST["newquestion"])) {
     //get user Id
@@ -79,6 +77,11 @@ print '</audio>';
 $getIncorrectAnimalsQuery = "SELECT pmkAnimalName FROM tblAnimals WHERE pmkAnimalName != ? AND fldLevel = ? ORDER BY RAND() LIMIT 2";
 $IncorrectAnimalsQueryData = array($correctAnimal[0][0],$level[0][0]);
 $incorrectAnimals = $thisDatabaseReader->select($getIncorrectAnimalsQuery, $IncorrectAnimalsQueryData, 1, 3);
+//insert the question id and the two incorrect animals to tblQuestionsAnimals
+$questionsAnimalsQuery = 'INSERT INTO tblQuestionsAnimals (fnkQuestionId,fnkAnimalName,fnkSecondAnimalName) VALUES (?, ?, ?)';
+$questionFnk = $thisDatabaseWriter->lastInsert();
+$questionsAnimalsData = array($questionFnk,$incorrectAnimals[0][0],$incorrectAnimals[1][0]);
+$thisDatabaseWriter->insert($questionsAnimalsQuery, $questionsAnimalsData);
 //create an array of the correct and incorrect animals
 $animalsToDisplay = array($correctAnimal[0][0], $incorrectAnimals[0][0], $incorrectAnimals[1][0]);
 //randomize the array
