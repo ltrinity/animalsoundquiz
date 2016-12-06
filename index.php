@@ -1,10 +1,7 @@
 <?php
-//Sitemap that links to er diagram, index, and schema
-//Validate input on forms and provide feedback
-//Show approval and confirmation on user profile page
-//Combine existing and new user page and allow updating of user information
-//CSS, animals in background image for site
-//Use transparency
+//Update schema and link on sitemap
+//css on question page, questionsanimals page, and answer page
+//background image of animals use transparency
 //Button to show details about question
 // Not letting a question get asked more than once
 //tblBadges and earn badges for certain achievements

@@ -14,20 +14,39 @@ $questions = $thisDatabaseReader->select($quizQuestionsQuery, $data, 1);
 if(is_array($questions)){
     $counter = 0;
     $numQuestions = 1;
+    print '<table>';
+    print '<tr>';
+    print '<th>Question Number</th>';
+    print '<th>Correct Answer</th>';
+    print '<th>Your Answer</th>';
+    print '<th>Details</th>';
+    print '</tr>';
     foreach($questions as $question){
-        print '<p id ="' . $counterQuestion . '">Question '. $numQuestions . ': You chose ' . $question['fnkUserChoseAnimalName'];
-        if($question['fnkRightAnswerAnimalId']==$question['fnkUserChoseAnimalName']){
-            print ' which was correct.</p>';
-        } else {
-            print ' but the correct answer was ' . $question['fnkRightAnswerAnimalId'] . '.</p>' ;
-        }
+        if($question['fnkUserChoseAnimalName']==$question['fnkRightAnswerAnimalId']){
+        print '<tr class = "correct">';}
+        else{
+            print '<tr class = "incorrect">';}
+        print '<td>' . $numQuestions . '</td>';
+        print '<td>' . $question['fnkRightAnswerAnimalId'] . '</td>';
+        print '<td>' . $question['fnkUserChoseAnimalName'] . '</td>';
+        print '<td>';
+        //we will now create a form that goes to a page with more information about the quiz
+        //begin form
+        print '<form  method = "post" action = "questionsanimals.php">';
+        //store the user pmk in a hidden input
+        print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
+        //store the quiz pmk in a hidden input
+        print '<input type="hidden" name="quizPrimaryKey" value="' . $quizPrimaryKey . '">';
+        //store the quiz pmk in a hidden input
+        print '<input type="hidden" name="rightAnswer" value="' . $question['fnkRightAnswerAnimalId']  . '">';
+        //store the quiz pmk in a hidden input
+        print '<input type="hidden" name="userAnswer" value="' . $question['fnkUserChoseAnimalName']  . '">';        //print submit button
+        print '<input type="submit" id="questionsanimals" name="questionsanimals" value="Review" tabindex="900" class = "button">';
+        //end form
+        print '</form>';
+        print '</td>';
+        print '</tr>';
         $numQuestions++;
-        //use a counter to show alternating rows in different colors
-        if ($counter == 0) {
-            $counter++;
-        } else {
-            $counter--;
-        }
     }
 }
 //begin form
@@ -35,6 +54,6 @@ if(is_array($questions)){
         //store the user pmk in a hidden input
         print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
         //print submit button
-        print '<input type="submit" id="quiz" name="quiz" value="Return to the user profile page" tabindex="900" class = "button">';
+        print '<input type="submit" id="quiz" name="quiz" value="Back" tabindex="900" class = "button">';
         //end form
         print '</form>';

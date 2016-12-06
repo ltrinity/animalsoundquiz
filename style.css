@@ -89,3 +89,35 @@ nav{
 #register{
     display:block;
 }
+#userInformation{
+    float:right;
+}
+#startQuiz{
+    margin:auto;
+}
+table{
+    margin-left: 2cm;
+}
+table, th, td{
+   text-align:center;
+   border: 1px solid white;
+   padding: 15px;
+}
+th{
+    background-color: white;
+}
+.odd{
+    background-color: white;
+}
+#profile{
+    float:left;
+}
+.large{
+    font-size: 30px;
+}
+.correct{
+    background-color:lightgreen;
+}
+.incorrect{
+    background-color:lightsalmon;
+}
