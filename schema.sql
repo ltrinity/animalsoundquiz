@@ -1,11 +1,13 @@
 CREATE TABLE IF NOT EXISTS tblUsers(
 pmkUserId int(11) NOT NULL AUTO_INCREMENT,
-fldFirstName varchar(15) NOT NULL,
-fldLastName varchar(15) NOT NULL,
-fnkFavoriteAnimalName varchar(15) NOT NULL,
-fldEmail varchar(20) NOT NULL,
-fldDateJoined varchar(20) NOT NULL,
+fldFirstName varchar(15) NULL,
+fldLastName varchar(15) NULL,
+fnkFavoriteAnimalName varchar(15) NOT NULL DEFAULT 'tiger',
+fldEmail varchar(40) NOT NULL,
+fldDateJoined  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 fldLevel int(1) NOT NULL DEFAULT '1',
+fldConfirmed int(1) NOT NULL DEFAULT '0',
+fldApproved int(1) NOT NULL DEFAULT '0',
 PRIMARY KEY (pmkUserId))
 
 CREATE TABLE IF NOT EXISTS tblUsersQuizzes(

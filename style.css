@@ -10,13 +10,19 @@
     height: 300px;
     width: 300px;
     border-style: solid;
-    border-color: orange;
+    border-color: white;
+    border-radius: 32px;
 }
 .button{
     width: 200px;
     height:50px;
     margin:auto;
     font-size: 20px;
+}
+#quizquestions{
+    width:100px;
+    font-size:20px;
+    height:40px;
 }
 .none{
     display:none;
@@ -47,6 +53,8 @@ body{
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+    background-image: url('https://ltrinity.w3.uvm.edu/cs148_develop/animalsoundquiz/photos/background.jpg');
+    
 }
 header {
     font-size: 20px;
@@ -58,6 +66,8 @@ header {
     width:960px;
     top: 0px;
     margin:0px auto;
+    border-radius: 32px;
+        margin-bottom:15px;
     text-align:center;
     background-image: url('https://ltrinity.w3.uvm.edu/cs148_develop/animalsoundquiz/photos/lions.jpg'),
         url('https://ltrinity.w3.uvm.edu/cs148_develop/animalsoundquiz/photos/elephants.jpg');
@@ -90,30 +100,98 @@ nav{
     display:block;
 }
 #userInformation{
-    float:right;
+    float:left;
+    border-style: solid;
+    border-color: white;
+    border-radius: 32px;
+    background-color: royalblue;
+    color:white;
+    line-height: 15px;
+    width: 270px;
+    height: 425px;
+    margin-right:20px;
 }
 #startQuiz{
     margin:auto;
+    border-style: solid;
+    border-color: white;
+    border-radius: 32px;
+    background-color: royalblue;
+    color:white;
+    width:280px;
+    float:right;
 }
-table{
-    margin-left: 2cm;
+#loginForm{
+    margin:auto;
+    border-style: solid;
+    border-color: white;
+    border-radius: 32px;
+    background-color: royalblue;
+    color:white;
+    width:280px;
+}
+#userProfileEdit{
+    margin:auto;
+    border-style: solid;
+    border-color: white;
+    border-radius: 32px;
+    background-color: royalblue;
+    color:white;
+    width:280px;
+    float:left;
+}
+#reviewquizzes{
+    margin-top:500px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 32px;
+    background-color: royalblue;
+    width:595px;
+}
+#pastQuizzes{
+    font-size:30px;
 }
 table, th, td{
+   margin:auto;
    text-align:center;
-   border: 1px solid white;
-   padding: 15px;
+   border: 2px solid white;
+   padding: 8px;
+   font-size:10px;
+   border-collapse: collapse;
+   color:white;  
+}
+td{
+    font-size:20px;
 }
 th{
-    background-color: white;
+    font-size:25px;
+}
+tr{
+       border-radius: 32px;
+}
+th{
+    background-color: royalblue;
 }
 .odd{
-    background-color: white;
+    background-color: royalblue;
+}
+.even{
+    
 }
 #profile{
     float:left;
+    width:170px;
+    height:170px;
+    display:block;
+    margin-left: 45px;
+    margin-bottom:10px;
 }
 .large{
     font-size: 30px;
+}
+.xlarge{
+    font-size: 35px;
+    color:white;
 }
 .correct{
     background-color:lightgreen;

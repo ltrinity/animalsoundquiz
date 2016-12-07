@@ -30,6 +30,21 @@ if (isset($_GET["register"])) {
     //get the email
     $favoriteAnimal = htmlentities($_GET["favoriteAnimal"], ENT_QUOTES, "UTF-8");
     //if they do not enter an email
+    if(strlen($email)>40){
+        $errorMsg[] = "Email address too longs";
+        print '<p class = "error">Email address too long</p>';
+        $emailERROR = true;
+    }
+    if(strlen($firstName)>15){
+        $errorMsg[] = "First name too long";
+        print '<p class = "error">First name too long</p>';
+        $firstNameERROR = true;
+    }
+    if(strlen($lastName)>15){
+        $errorMsg[] = "Last name too long";
+        print '<p class = "error">Last name too long</p>';
+        $lastNameERROR = true;
+    }
     if ($email == "") {
         $errorMsg[] = "Please enter your email address";
         print '<p class = "error">Please enter your email address</p>';
@@ -120,7 +135,7 @@ if (isset($_GET["register"])) {
         //end form
         print '</form>';
     } 
-}
+}print '<fieldset id ="loginForm">';
 //here is the main form to register
 print '<form method = "get" action="login.php">';
 //user enter their first name, last name, and email
@@ -160,6 +175,7 @@ print '<select name="favoriteAnimal">';
 print '<input type="submit" id="register" name="register" value="Submit" tabindex="900" class = "button">';
 //end the form
 print '</form>';
+print '</fieldset>';
 //include footer
 include "footer.php";
 ?>
