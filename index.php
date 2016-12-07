@@ -1,12 +1,10 @@
 <?php
-//Update schema and link on sitemap
-//css on question page, questionsanimals page, and answer page
-//background image of animals use transparency
-//Button to show details about question
+//Update schema and link on sitemap with data dictionary and specs, put in fieldset
+//css on quizquestions page and questions animals page
+//possibly use transparency
 // Not letting a question get asked more than once
-//tblBadges and earn badges for certain achievements
 //Only show level up one time
-//Add more birds
+//Add more birds and other animals
 //initialize database connection
 include "top.php";
 //welcome user to the site

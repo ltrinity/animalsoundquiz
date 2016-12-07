@@ -8,6 +8,8 @@ prompt user to select an animal if they have not-->
     function showhide(element) {
         //show the submit button
         document.getElementById("questionSubmitButton").hidden = "";
+        //show the submit button
+        document.getElementById("questionSubmitButtonFieldset").hidden = "";
         //hide the prompt to select an animal
         document.getElementById("promptToPickAnimal").hidden = "hidden";
         //get the id of the element passed in to the function
@@ -20,9 +22,11 @@ prompt user to select an animal if they have not-->
         //make sure the old selection returns to normal size
         for (var i = 0; i < textarray.length; i++) {
             textarray[i].style.fontSize = "large";
+            textarray[i].style.textShadow = "";
         }
         //make the selected animal larger
         document.getElementById(labelId).style.fontSize = "xx-large";
+        document.getElementById(labelId).style.textShadow= "0px -1px black";
     }
 </script>
 <?php
@@ -64,8 +68,10 @@ $lastId = array($thisDatabaseWriter->lastInsert());
 //get the sound for the current question based on the animal name of the last inserted id
 $getCorrectAnswerAnimalNameQuery = "SELECT fnkRightAnswerAnimalId from tblQuestions WHERE pmkQuestionId = ?";
 $correctAnimal = $thisDatabaseReader->select($getCorrectAnswerAnimalNameQuery, $lastId, 1);
+print '<fieldset class = "audioFieldset">';
+print '<p class="xlarge" id = "promptToPickAnimal">Click to choose the animal that makes this sound</p>';
 //inform user how to hear sound
-print '<p>Click the play button to hear the sound </p>';
+print '<p class="moderate">Click the play button to hear the sound again</p>';
 //display the sound for the correct animal
 print '<audio controls autoplay>';
 print'<source src="sounds/';
@@ -73,6 +79,7 @@ print $correctAnimal[0][0];
 print '.mp3" type="audio/mpeg">';
 print'Your browser does not support the audio element.';
 print '</audio>';
+print '</fieldset>';
 //this query will get two animals that are not the correct animal
 $getIncorrectAnimalsQuery = "SELECT pmkAnimalName FROM tblAnimals WHERE pmkAnimalName != ? AND fldLevel = ? ORDER BY RAND() LIMIT 2";
 $IncorrectAnimalsQueryData = array($correctAnimal[0][0],$level[0][0]);
@@ -88,24 +95,27 @@ $animalsToDisplay = array($correctAnimal[0][0], $incorrectAnimals[0][0], $incorr
 shuffle($animalsToDisplay);
 //begin the form
 print '<form  method = "post" action = "answer.php">';
-//inform user to select an animal
-print '<p id = "promptToPickAnimal">Select an animal by clicking on a picture</p>';
 //display each animals photo
 foreach ($animalsToDisplay as $animal) {
     //wrap the image and text in a div
-    print '<div class="imagetext">';
+   print '<div class = "imagetext">';
     print '<label>';
     //create a hidden radio button
     print '<input type="radio" name="animalSelection" onclick="showhide(this)" class="none" value = "' . $animal . '" id = "' . $animal . '"/>';
     //display photo
     print '<img src="photos/' . $animal . '.jpg" class = "animal">';
     //this text will display the animal name under its photo
-    print '<span class = "textunder" id = "' . $animal . 'label">' . $animal . '</span>';
+    print '<fieldset class = "questionsFieldsets">';
+    print '<span class = "textunder" id = "' . $animal . 'label"><strong>' . $animal . '</strong></span>';
+    print '</fieldset>';
     print '</label>';
     print '</div>';
 }
+
+print '<fieldset id = "questionSubmitButtonFieldset" name = "questionSubmitButtonFieldset" hidden = "hidden">';
+
 //print submit button
-print '<input type="submit" id="questionSubmitButton" name="questionSubmitButton" hidden = "hidden" value="Check" tabindex="900" class = "button">';
+print '<input type="submit" id="questionSubmitButton" name="questionSubmitButton" hidden = "hidden" value="Confirm Answer" tabindex="900" class = "button">';
 //store the prev question id
 print '<input type="text" name="questionIdPrior" hidden = "hidden" value="' . $lastId[0] . '">';
 //store the correct animal in a hidden input
@@ -116,6 +126,7 @@ print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '
 print '<input type="hidden" name="quizPrimaryKey" value="' . $quizPrimaryKey . '">';
 //end form
 print '</form>';
+print '</fieldset>';
 //include footer
 include "footer.php";
 ?>

@@ -123,17 +123,18 @@ if (isset($_GET["register"])) {
 
         // remove click to confirm
         $message = $messageA . $messageC;
+        print '<fieldset id= "userRegistered">';
         //inform the user
         print '<p>' . $message . '</p>';
-        
         //begin form that sends user primary key to quiz page
         print '<form method = "post" action="quiz.php">';
         //store the user pmk in a hidden input
         print '<input type="text" name="userPrimaryKey" hidden = "hidden" value="' . $userPrimaryKey . '">';
         //print submit button
-        print '<input type="submit" id="quiz" name="quiz" value="Take a Quiz" tabindex="900" class = "button">';
+        print '<input type="submit" id="quiz" name="quiz" value="Click Here To Login" tabindex="900" class = "button">';
         //end form
         print '</form>';
+        print '</fieldset>';
     } 
 }print '<fieldset id ="loginForm">';
 //here is the main form to register

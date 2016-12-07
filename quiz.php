@@ -110,7 +110,7 @@ if (!$existsError) {
 //form to update user information
     print '</fieldset>';
     print '<fieldset id ="userProfileEdit">';
-    print '<p class="large">Edit Profile</p>';
+    print '<p class="xlarge">Edit Profile</p>';
 //begin form
     print '<form  method = "post" action = "quiz.php">';
 //let user choose name of quiz
@@ -156,7 +156,7 @@ print '<select name="favoriteAnimal">';
     $quizInformationQuery = 'SELECT fldNumberCorrect,fldTotalQuestions,fldQuizName,fldDateCreated,pmkQuizId FROM tblUsersQuizzes JOIN tblQuizzes ON pmkQuizId = fnkQuizId WHERE fnkUserId = ?';
     $quizzes = $thisDatabaseReader->select($quizInformationQuery, $pmkArray, 1);
     print '<fieldset id ="startQuiz">';
-    print '<p class="large">Start a Quiz</p>';
+    print '<p class="xlarge">Start a Quiz</p>';
 //begin form
     print '<form  method = "post" action = "question.php">';
 //let user choose name of quiz
@@ -171,6 +171,40 @@ print '<select name="favoriteAnimal">';
 //end form
     print '</form>';
     print '</fieldset>';
+    $counter=0;
+    //show all the highscores
+    $scoresQuery = 'SELECT fldFirstName,fldLastName,fnkFavoriteAnimalName,fldLevel FROM tblUsers ORDER BY fldLevel';
+    $scores = $thisDatabaseReader->select($scoresQuery, "", 0,1);
+    if($scores){
+    print '<fieldset id = "highScores">';
+    print '<p class = "xlarge">User Scoreboard</p>';
+        print '<table>';
+        print '<tr>';
+        print '<th>User</th>';
+        print '<th>Level</th>';
+        print '</tr>';
+    foreach($scores as $score){
+        if ($counter == 0) {
+                print '<tr class = "even">';
+            } else {
+                print '<tr class = "odd">';
+            }
+             print '<td>';
+             //display photo
+                print '<img src="photos/' . $score['fnkFavoriteAnimalName'] . '.jpg" class = "highScorePhoto">';
+            print '<p class="moderate">' . $score['fldFirstName'] . ' ' . $score['fldLastName'] . '</p></td>';
+            print '<td><p class="moderate">' . $score['fldLevel'] . '</p></td>';
+            print '</tr>';
+            //use a counter to show alternating rows in different colors
+            if ($counter == 0) {
+                $counter++;
+            } else {
+                $counter--;
+            }
+        }
+                print '</table>';
+        print '</fieldset>';
+    }
 //if they have taken a quiz display the information we have about it
     if ($quizzes) {
         print '<fieldset id = "reviewquizzes">';
@@ -203,7 +237,7 @@ print '<select name="favoriteAnimal">';
             //store the quiz pmk in a hidden input
             print '<input type="hidden" name="quizPrimaryKey" value="' . $quiz['pmkQuizId'] . '">';
             //print submit button
-            print '<input type="submit" id="quizquestions" name="quizquestions" value="Review" tabindex="900" class = "button">';
+            print '<input type="submit" id="quizquestionsbutton" name="quizquestionsbutton" value="Review" tabindex="900" class = "button">';
             //end form
             print '</form>';
             print '</td>';
@@ -218,5 +252,6 @@ print '<select name="favoriteAnimal">';
         print '</table>';
         print '</fieldset>';
     }
+    
 }
 ?>

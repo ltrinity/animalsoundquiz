@@ -2,7 +2,7 @@
 //include top
 include "top.php";
 //if the form is submitted post the values
-if (isset($_POST["quizquestions"])) {
+if (isset($_POST["quizquestionsbutton"])) {
     //get the user pmk
     $userPrimaryKey = htmlentities($_POST["userPrimaryKey"], ENT_QUOTES, "UTF-8");
     //get the quiz pmk
@@ -48,6 +48,7 @@ if(is_array($questions)){
         print '</tr>';
         $numQuestions++;
     }
+    print '</table>';
 }
 //begin form
         print '<form  method = "post" action = "quiz.php">';
