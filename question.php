@@ -58,11 +58,12 @@ if (isset($_POST["quizSubmit"])) {
 $getUserLevelQuery = 'SELECT fldLevel FROM tblUsers WHERE pmkUserId = ?';
 $pmk = array($userPrimaryKey);
 $level = $thisDatabaseReader->select($getUserLevelQuery, $pmk, 1);
-$levelArray = array($level[0][0]);
+$levelArray = array($quizPrimaryKey, $userPrimaryKey, $level[0][0]);
 //We will now create a question
+////get the last ID created
 //select a random animal and insert it into tblQuestions as a foreign key
-$getRightAnswerAnimalIdQuery = "INSERT INTO tblQuestions (fnkRightAnswerAnimalId) SELECT pmkAnimalName FROM tblAnimals WHERE fldLevel = ? ORDER BY RAND() LIMIT 1";
-$thisDatabaseWriter->insert($getRightAnswerAnimalIdQuery, $levelArray, 1, 1);
+$getRightAnswerAnimalIdQuery = 'INSERT INTO tblQuestions (fnkRightAnswerAnimalId) SELECT pmkAnimalName FROM tblAnimals WHERE pmkAnimalName NOT IN (SELECT fnkRightAnswerAnimalId FROM tblQuestions JOIN tblQuizzesQuestions ON pmkQuestionId = fnkQuestionId JOIN tblQuizzes ON pmkQuizId = tblQuizzesQuestions.fnkQuizId JOIN tblUsersQuizzes ON pmkQuizId = tblUsersQuizzes.fnkQuizId JOIN tblUsers ON pmkUserId = fnkUserId WHERE pmkQuizId = ? AND pmkUserId = ? ) AND tblAnimals.fldLevel = ? ORDER BY RAND()';
+$thisDatabaseWriter->insert($getRightAnswerAnimalIdQuery, $levelArray, 2, 4);
 //get the last ID created
 $lastId = array($thisDatabaseWriter->lastInsert());
 //get the sound for the current question based on the animal name of the last inserted id
@@ -85,10 +86,12 @@ $getIncorrectAnimalsQuery = "SELECT pmkAnimalName FROM tblAnimals WHERE pmkAnima
 $IncorrectAnimalsQueryData = array($correctAnimal[0][0],$level[0][0]);
 $incorrectAnimals = $thisDatabaseReader->select($getIncorrectAnimalsQuery, $IncorrectAnimalsQueryData, 1, 3);
 //insert the question id and the two incorrect animals to tblQuestionsAnimals
-$questionsAnimalsQuery = 'INSERT INTO tblQuestionsAnimals (fnkQuestionId,fnkAnimalName,fnkSecondAnimalName) VALUES (?, ?, ?)';
+$questionsAnimalsQuery = 'INSERT INTO tblQuestionsAnimals (fnkQuestionId,fnkAnimalName) VALUES (?, ?)';
 $questionFnk = $thisDatabaseWriter->lastInsert();
-$questionsAnimalsData = array($questionFnk,$incorrectAnimals[0][0],$incorrectAnimals[1][0]);
+$questionsAnimalsData = array($questionFnk,$incorrectAnimals[0][0]);
+$questionsAnimalsData2 = array($questionFnk,$incorrectAnimals[1][0]);
 $thisDatabaseWriter->insert($questionsAnimalsQuery, $questionsAnimalsData);
+$thisDatabaseWriter->insert($questionsAnimalsQuery, $questionsAnimalsData2);
 //create an array of the correct and incorrect animals
 $animalsToDisplay = array($correctAnimal[0][0], $incorrectAnimals[0][0], $incorrectAnimals[1][0]);
 //randomize the array

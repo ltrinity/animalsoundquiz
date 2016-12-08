@@ -173,7 +173,7 @@ print '<select name="favoriteAnimal">';
     print '</fieldset>';
     $counter=0;
     //show all the highscores
-    $scoresQuery = 'SELECT fldFirstName,fldLastName,fnkFavoriteAnimalName,fldLevel FROM tblUsers ORDER BY fldLevel';
+    $scoresQuery = 'SELECT fldFirstName,fldLastName,fnkFavoriteAnimalName,fldLevel FROM tblUsers ORDER BY fldLevel DESC';
     $scores = $thisDatabaseReader->select($scoresQuery, "", 0,1);
     if($scores){
     print '<fieldset id = "highScores">';

@@ -137,6 +137,7 @@ if (isset($_GET["register"])) {
         print '</fieldset>';
     } 
 }print '<fieldset id ="loginForm">';
+print '<p class="xlarge">Enter your information below</p>';
 //here is the main form to register
 print '<form method = "get" action="login.php">';
 //user enter their first name, last name, and email
@@ -171,7 +172,7 @@ print '<select name="favoriteAnimal">';
                 }
             }
         print '</select>';
-        print '<p class="moderate">Click below to register or login</p>';
+        print '<p class="moderate">Click the button to register or login</p>';
 //print submit button
 print '<input type="submit" id="register" name="register" value="Submit" tabindex="900" class = "button">';
 //end the form

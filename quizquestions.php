@@ -11,8 +11,20 @@ if (isset($_POST["quizquestionsbutton"])) {
 $quizQuestionsQuery = 'SELECT fnkRightAnswerAnimalId,fnkUserChoseAnimalName FROM tblQuizzesQuestions JOIN tblQuestions ON pmkQuestionId = fnkQuestionId WHERE fnkQuizId = ?';
 $data = array($quizPrimaryKey);
 $questions = $thisDatabaseReader->select($quizQuestionsQuery, $data, 1);
-if(is_array($questions)){
-    $counter = 0;
+//begin form
+    print '<fieldset id = "reviewquestions">';
+        print '<form  method = "post" action = "quiz.php">';
+        //store the user pmk in a hidden input
+        print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
+        //print submit button
+        print '<input type="submit" id="quiz" name="quiz" value="Return to your profile" tabindex="900" class = "button">';
+        //end form
+        print '</form>';
+            print '<p class = "xlarge">Review Your Quiz</p>';
+if($questions){
+
+    
+
     $numQuestions = 1;
     print '<table>';
     print '<tr>';
@@ -41,7 +53,7 @@ if(is_array($questions)){
         print '<input type="hidden" name="rightAnswer" value="' . $question['fnkRightAnswerAnimalId']  . '">';
         //store the quiz pmk in a hidden input
         print '<input type="hidden" name="userAnswer" value="' . $question['fnkUserChoseAnimalName']  . '">';        //print submit button
-        print '<input type="submit" id="questionsanimals" name="questionsanimals" value="Review" tabindex="900" class = "button">';
+        print '<input type="submit" id="questionsanimals" name="questionsanimals" value="Practice" tabindex="900" class = "button">';
         //end form
         print '</form>';
         print '</td>';
@@ -49,12 +61,9 @@ if(is_array($questions)){
         $numQuestions++;
     }
     print '</table>';
+
 }
-//begin form
-        print '<form  method = "post" action = "quiz.php">';
-        //store the user pmk in a hidden input
-        print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
-        //print submit button
-        print '<input type="submit" id="quiz" name="quiz" value="Back" tabindex="900" class = "button">';
-        //end form
-        print '</form>';
+    print '</fieldset>';
+//include footer
+include "footer.php";
+?>

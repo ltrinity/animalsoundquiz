@@ -129,7 +129,7 @@ nav{
     border-radius: 32px;
     background-color: royalblue;
     color:white;
-    width:280px;
+    width:320px;
 }
 #userProfileEdit{
     margin:auto;
@@ -148,6 +148,14 @@ nav{
     border-radius: 32px;
     background-color: royalblue;
     width:595px;
+}
+#reviewquestions{
+    color:white;
+    border-style: solid;
+    border-color: white;
+    border-radius: 32px;
+    background-color: royalblue;
+    display:inline;
 }
 #highScores{
     margin-top:10px;
@@ -190,10 +198,10 @@ th{
     background-color: royalblue;
 }
 .odd{
-    background-color: royalblue;
+    background-color: darkslateblue;
 }
 .even{
-    
+    background-color: navy;
 }
 #profile{
     float:left;
@@ -211,10 +219,10 @@ th{
     color:white;
 }
 .correct{
-    background-color:lightgreen;
+    background-color:darkgreen;
 }
 .incorrect{
-    background-color:lightsalmon;
+    background-color:darkred;
 }
 footer{
         text-shadow: 0px -2px black;
@@ -269,9 +277,15 @@ footer{
     background-color: royalblue;
     color:white;
     display:inline;
-        width:250px;
-    height:285px;
+        width:350px;
 }
 #newquestion{
     margin-bottom:10px;
+}
+#backButton{
+    border-style: solid;
+    border-color: white;
+    border-radius: 32px;
+    background-color: royalblue;
+    display:inherit;
 }
