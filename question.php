@@ -8,6 +8,7 @@ prompt user to select an animal if they have not-->
     function showhide(element) {
         //show the submit button
         document.getElementById("questionSubmitButton").hidden = "";
+        document.getElementById("questionSubmitButton").style.display = "block";
         //hide the prompt to select an animal
         document.getElementById("promptToPickAnimal").hidden = "hidden";
         //get the id of the element passed in to the function
@@ -109,7 +110,7 @@ print '<input type="hidden" name="hiddenCorrectAnimal" value="' . $correctAnimal
 print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
 //store the quiz pmk in a hidden input
 print '<input type="hidden" name="quizPrimaryKey" value="' . $quizPrimaryKey . '">';
-print '</fieldset>';
+
 //display each animals photo
 foreach ($animalsToDisplay as $animal) {
     //wrap the image and text in a div
@@ -119,10 +120,10 @@ foreach ($animalsToDisplay as $animal) {
     print '<input type="radio" name="animalSelection" onclick="showhide(this)" class="none" value = "' . $animal . '" id = "' . $animal . '"/>';
     //display photo
         //this text will display the animal name under its photo
-    print '<fieldset class = "questionsFieldsets">';
+    
     print '<span class = "textunder" id = "' . $animal . 'label"><strong>' . $animal . '</strong></span>';
-    print '</fieldset>';
-    print '<img src="photos/' . $animal . '.jpg" class = "animal">';
+    
+    print '<img alt="image" src="photos/' . $animal . '.jpg" class = "animal">';
 
     print '</label>';
     print '</div>';
@@ -131,7 +132,7 @@ foreach ($animalsToDisplay as $animal) {
 
 //end form
 print '</form>';
-
+print '</fieldset>';
 //include footer
 include "footer.php";
 ?>

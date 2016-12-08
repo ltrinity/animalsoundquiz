@@ -16,11 +16,6 @@
         } else {
             print '<li><a href="login.php">Login</a></li>';
         }
-        if (basename($_SERVER['PHP_SELF']) == "practice.php") {
-            print '<li class="activePage">Practice</li>';
-        } else {
-            print '<li><a href="practice.php">Practice</a></li>';
-        }
         ?>
     </ol>
 </nav>

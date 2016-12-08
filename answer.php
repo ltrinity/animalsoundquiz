@@ -115,7 +115,6 @@ if (isset($_POST["questionSubmitButton"])) {
     print '<img src="photos/' . $correctAnswer . '.jpg" class = "animal">';
 }
 
-print '</fieldset>';
 //include footer
 include "footer.php";
 ?>

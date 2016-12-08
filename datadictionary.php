@@ -2,28 +2,28 @@
 include "top.php";
 ?>
    <h2>tblAnimals</h2>
-<table width="100%" class="print"><tr><th width="50">Column</th><th width="80">Type</th><th width="40">Null</th><th width="70">Default</th>    <th>Links to</th>
+<table  class="print"><tr><th >Column</th><th >Type</th><th >Null</th><th >Default</th>    <th>Links to</th>
     <th>Comments</th>
 </tr><tr class="odd"><td class="nowrap">pmkAnimalName <em>(Primary)</em></td><td class="nowrap" lang="en" dir="ltr">varchar(20)</td><td>No</td><td class="nowrap"></td>    <td></td>
     <td></td>
 </tr><tr class="even"><td class="nowrap">fldLevel</td><td class="nowrap" lang="en" dir="ltr">int(11)</td><td>No</td><td class="nowrap"></td>    <td></td>
     <td></td>
 </tr></table><h2>tblQuestions</h2>
-<table width="100%" class="print"><tr><th width="50">Column</th><th width="80">Type</th><th width="40">Null</th><th width="70">Default</th>    <th>Links to</th>
+<table  class="print"><tr><th >Column</th><th >Type</th><th >Null</th><th >Default</th>    <th>Links to</th>
     <th>Comments</th>
 </tr><tr class="odd"><td class="nowrap">pmkQuestionId <em>(Primary)</em></td><td class="nowrap" lang="en" dir="ltr">int(11)</td><td>No</td><td class="nowrap"></td>    <td></td>
     <td></td>
 </tr><tr class="even"><td class="nowrap">fnkRightAnswerAnimalId</td><td class="nowrap" lang="en" dir="ltr">varchar(20)</td><td>No</td><td class="nowrap"></td>    <td></td>
     <td></td>
 </tr></table><h2>tblQuestionsAnimals</h2>
-<table width="100%" class="print"><tr><th width="50">Column</th><th width="80">Type</th><th width="40">Null</th><th width="70">Default</th>    <th>Links to</th>
+<table  class="print"><tr><th >Column</th><th >Type</th><th >Null</th><th >Default</th>    <th>Links to</th>
     <th>Comments</th>
 </tr><tr class="odd"><td class="nowrap">fnkQuestionId <em>(Primary)</em></td><td class="nowrap" lang="en" dir="ltr">int(11)</td><td>No</td><td class="nowrap"></td>    <td></td>
     <td></td>
 </tr><tr class="even"><td class="nowrap">fnkAnimalName <em>(Primary)</em></td><td class="nowrap" lang="en" dir="ltr">varchar(20)</td><td>No</td><td class="nowrap"></td>    <td></td>
     <td></td>
 </tr></table><h2>tblQuizzes</h2>
-<table width="100%" class="print"><tr><th width="50">Column</th><th width="80">Type</th><th width="40">Null</th><th width="70">Default</th>    <th>Links to</th>
+<table  class="print"><tr><th >Column</th><th >Type</th><th >Null</th><th >Default</th>    <th>Links to</th>
     <th>Comments</th>
 </tr><tr class="odd"><td class="nowrap">pmkQuizId <em>(Primary)</em></td><td class="nowrap" lang="en" dir="ltr">int(11)</td><td>No</td><td class="nowrap"></td>    <td></td>
     <td></td>
@@ -32,7 +32,7 @@ include "top.php";
 </tr><tr class="odd"><td class="nowrap">fldQuizName</td><td class="nowrap" lang="en" dir="ltr">varchar(20)</td><td>Yes</td><td class="nowrap"><i>NULL</i></td>    <td></td>
     <td></td>
 </tr></table><h2>tblQuizzesQuestions</h2>
-<table width="100%" class="print"><tr><th width="50">Column</th><th width="80">Type</th><th width="40">Null</th><th width="70">Default</th>    <th>Links to</th>
+<table  class="print"><tr><th >Column</th><th >Type</th><th >Null</th><th >Default</th>    <th>Links to</th>
     <th>Comments</th>
 </tr><tr class="odd"><td class="nowrap">fnkQuizId <em>(Primary)</em></td><td class="nowrap" lang="en" dir="ltr">int(11)</td><td>No</td><td class="nowrap"></td>    <td></td>
     <td></td>
@@ -41,7 +41,7 @@ include "top.php";
 </tr><tr class="odd"><td class="nowrap">fnkUserChoseAnimalName</td><td class="nowrap" lang="en" dir="ltr">varchar(20)</td><td>No</td><td class="nowrap"></td>    <td></td>
     <td></td>
 </tr></table><h2>tblUsers</h2>
-<table width="100%" class="print"><tr><th width="50">Column</th><th width="80">Type</th><th width="40">Null</th><th width="70">Default</th>    <th>Links to</th>
+<table  class="print"><tr><th >Column</th><th >Type</th><th >Null</th><th >Default</th>    <th>Links to</th>
     <th>Comments</th>
 </tr><tr class="odd"><td class="nowrap">pmkUserId <em>(Primary)</em></td><td class="nowrap" lang="en" dir="ltr">int(11)</td><td>No</td><td class="nowrap"></td>    <td></td>
     <td></td>
@@ -62,7 +62,7 @@ include "top.php";
 </tr><tr class="odd"><td class="nowrap">fldApproved</td><td class="nowrap" lang="en" dir="ltr">int(1)</td><td>No</td><td class="nowrap">0</td>    <td></td>
     <td></td>
 </tr></table><h2>tblUsersQuizzes</h2>
-<table width="100%" class="print"><tr><th width="50">Column</th><th width="80">Type</th><th width="40">Null</th><th width="70">Default</th>    <th>Links to</th>
+<table  class="print"><tr><th >Column</th><th >Type</th><th >Null</th><th >Default</th>    <th>Links to</th>
     <th>Comments</th>
 </tr><tr class="odd"><td class="nowrap">fnkUserId <em>(Primary)</em></td><td class="nowrap" lang="en" dir="ltr">int(11)</td><td>No</td><td class="nowrap"></td>    <td></td>
     <td></td>

@@ -28,11 +28,9 @@ print '<form  method = "post" action = "quizquestions.php">';
     print '<div class = "imagetext">';
     print '<label>';
      //display photo
-    print '<img src="photos/' . $correctKey . '.jpg" class = "animal">';
+    print '<img alt = "image" src="photos/' . $correctKey . '.jpg" class = "animal">';
     //this text will display the animal name under its photo
-    print '<fieldset class = "questionsFieldsets">';
     print '<span class = "textunder" id = "' . $correctKey . 'label"><strong>' . $correctKey . '</strong></span>';
-    print '</fieldset>';
     print '</label>';
     print '</div>';
 //inform user how to hear sound
@@ -53,9 +51,7 @@ if ($correctKey != $incorrectKey) {
      //display photo
     print '<img src="photos/' . $incorrectKey . '.jpg" class = "animal">';
     //this text will display the animal name under its photo
-    print '<fieldset class = "questionsFieldsets">';
     print '<span class = "textunder" id = "' . $incorrectKey . 'label"><strong>' . $incorrectKey . '</strong></span>';
-    print '</fieldset>';
     print '</label>';
     print '</div>';
 //inform user how to hear sound

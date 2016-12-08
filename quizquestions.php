@@ -15,7 +15,7 @@ $questions = $thisDatabaseReader->select($quizQuestionsQuery, $data, 1);
     print '<fieldset class = "reviewquestions">';
         
             print '<p class = "xlarge">Review Your Quiz</p>';
-            print '<form  method = "post" action = "quiz.php" id ="mb">';
+            print '<form  method = "post" action = "quiz.php" class ="mb">';
         //store the user pmk in a hidden input
         print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
         //print submit button

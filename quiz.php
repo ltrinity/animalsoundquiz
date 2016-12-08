@@ -27,6 +27,7 @@ if (isset($_POST["endquiz"])) {
     //get the user id for a new user
     $userPrimaryKey = htmlentities($_POST["userPrimaryKey"], ENT_QUOTES, "UTF-8");
 }
+
 //if the form is submitted on the existing user page get the pmk
 if (isset($_GET["register"])) {
     //get the first name
@@ -100,7 +101,7 @@ if (!$existsError) {
     print '<p class ="xlarge"><strong>'     .   $userAttributes[0]['fldLastName'] . '</strong></p>';
         print '<p class = "xlarge">Level: ' . $userAttributes[0]['fldLevel'] . '</p>';
 //display photo
-    print '<img src="photos/' . $userAttributes[0]['fnkFavoriteAnimalName'] . '.jpg" class = "animal" id = "profile">';
+    print '<img alt="image" src="photos/' . $userAttributes[0]['fnkFavoriteAnimalName'] . '.jpg" class = "animal" id = "profile">';
 
     print '<p class = "moderate">Email: ' . $userAttributes[0]['fldEmail'] . '</p>';
     print '<p class = "moderate">Account Created: ' . substr($userAttributes[0]['fldDateJoined'], 0, 10) . '</p>';
@@ -135,7 +136,7 @@ print '<select name="favoriteAnimal">';
             if (is_array($animals)) {
                 print '<option';
                 //get selected to preserve from previous submission
-                if ("" == $favoriteAnimal) {
+                if ("" == $userAttributes[0]['fnkFavoriteAnimalName']) {
                     print ' selected="selected"';
                 }
                 print ' value ="">Choose your favorite animal</option>';
@@ -177,6 +178,15 @@ print '<select name="favoriteAnimal">';
     print '<input type="submit" id="quizSubmit" name="quizSubmit" value="Start a Quiz" tabindex="900" class = "button">';
 //end form
     print '</form>';
+    print '<p class="moderate">Click here to practice</p>';
+    //begin form to end quiz
+    print '<form  method = "post" action = "practice.php">';
+//store the user pmk in a hidden input
+    print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
+//print submit button
+    print '<input type="submit" id="practicebutton" name="practicebutton" value="Practice" tabindex="900" class = "button">';
+//end form
+    print '</form>';
     print '</fieldset>';
     $counter=0;
     //show all the highscores
@@ -198,7 +208,7 @@ print '<select name="favoriteAnimal">';
             }
              print '<td>';
              //display photo
-                print '<img src="photos/' . $score['fnkFavoriteAnimalName'] . '.jpg" class = "highScorePhoto">';
+                print '<img alt="image" src="photos/' . $score['fnkFavoriteAnimalName'] . '.jpg" class = "highScorePhoto">';
             print '<p class="moderate">' . $score['fldFirstName'] . ' ' . $score['fldLastName'] . '</p></td>';
             print '<td><p class="moderate">' . $score['fldLevel'] . '</p></td>';
             print '</tr>';
@@ -244,7 +254,7 @@ print '<select name="favoriteAnimal">';
             //store the quiz pmk in a hidden input
             print '<input type="hidden" name="quizPrimaryKey" value="' . $quiz['pmkQuizId'] . '">';
             //print submit button
-            print '<input type="submit" id="quizquestionsbutton" name="quizquestionsbutton" value="Review" tabindex="900" class = "button">';
+            print '<input type="submit" class="quizquestionsbutton" name="quizquestionsbutton" value="Review" tabindex="900">';
             //end form
             print '</form>';
             print '</td>';

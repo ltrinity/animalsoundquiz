@@ -2,7 +2,7 @@
     font-size:20px;
     color:red;
 }
-#er{
+#erimg{
     height: 750px;
     width: 1300px;
 }
@@ -29,10 +29,15 @@ h2{
     margin:auto;
     font-size: 20px;
 }
-#quizquestionsbutton{
+.quizquestionsbutton{
     width:100px;
     font-size:20px;
     height:40px;
+    margin:auto;
+    font-size: 20px;
+}
+#question{
+    width:1200px;
 }
 .none{
     display:none;
@@ -103,7 +108,7 @@ ol{
 }
 nav{
     background-color:grey;
-    width:300px;
+    width:200px;
     margin:auto;
 
 }
@@ -256,7 +261,6 @@ footer{
     margin-left:0px;
     margin-right:0px;
     text-align: center;
-    width:700px;
     display:inline;
 }
 .questionsFieldsets{
@@ -291,12 +295,13 @@ footer{
     background-color: royalblue;
         display: block;
     width: 30px;
-    margin-left: 415px;
+    margin-left: 365px;
     margin-bottom:20px;
 }
 #questionSubmitButton{
-    margin-top:10px;
+    margin-top: 20px;
+margin-bottom: 20px;
 }
-#mb{
+.mb{
     margin-bottom: 20px;
 }
