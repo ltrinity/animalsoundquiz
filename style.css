@@ -3,8 +3,8 @@
     color:red;
 }
 #er{
-    height: 600px;
-    width: 1200px;
+    height: 750px;
+    width: 1300px;
 }
 .animal{
     height: 300px;
@@ -12,6 +12,16 @@
     border-style: solid;
     border-color: white;
     border-radius: 32px;
+}
+h2{
+    border-style: solid;
+    border-color: white;
+    border-radius: 32px;
+    background-color:royalblue;
+    color:white;
+}
+#practice{
+    width:1200px;
 }
 .button{
     width: 200px;
@@ -93,7 +103,7 @@ ol{
 }
 nav{
     background-color:grey;
-    width:200px;
+    width:300px;
     margin:auto;
 
 }
@@ -149,7 +159,7 @@ nav{
     background-color: royalblue;
     width:595px;
 }
-#reviewquestions{
+.reviewquestions{
     color:white;
     border-style: solid;
     border-color: white;
@@ -279,11 +289,14 @@ footer{
     border-color: white;
     border-radius: 32px;
     background-color: royalblue;
-    display:inherit;
+        display: block;
+    width: 30px;
+    margin-left: 415px;
+    margin-bottom:20px;
 }
 #questionSubmitButton{
     margin-top:10px;
 }
-#extrawide{
-    width:1200px;
+#mb{
+    margin-bottom: 20px;
 }

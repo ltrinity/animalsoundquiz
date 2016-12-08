@@ -1,10 +1,6 @@
 <?php
-//level up information in fieldset
-//Update schema and link on sitemap with data dictionary and specs, and table data put in fieldset
-//possibly use transparency
-// Not letting a question get asked more than once
+//data dictionary and specs, and table data put in fieldset
 //Add more birds and other animals
-////practice page
 //initialize database connection
 include "top.php";
 //welcome user to the site

@@ -37,11 +37,9 @@ PRIMARY KEY (pmkQuestionId))
 CREATE TABLE IF NOT EXISTS tblQuestionsAnimals(
 fnkQuestionId int(11) NOT NULL,
 fnkAnimalName varchar(20) NOT NULL,
-fnkSecondAnimalName varchar(20) NOT NULL,
 CONSTRAINT pmkQuestionsAnimalsId PRIMARY KEY(fnkQuestionId))
 
 CREATE TABLE IF NOT EXISTS tblAnimals(
-pmkAnimalName varchar(15) NOT NULL,
-fldAnimalPhoto varchar(15) NOT NULL,
-fldLinkFurtherInfo varchar(30) NOT NULL,
+pmkAnimalName varchar(20) NOT NULL,
+fldLevel int(1) NOT NULL,
 PRIMARY KEY (pmkAnimalName))

@@ -142,11 +142,11 @@ print '<p class="xlarge">Enter your information below</p>';
 print '<form method = "get" action="login.php">';
 //user enter their first name, last name, and email
 print '<p class="moderate">Enter your first name</p>';
-print '<input id="firstName" maxlength="45" name="firstName" onfocus=this.select() type="text" value="' . $firstName . '">';
+print '<input id="firstName" maxlength="45" name="firstName" onfocus=this.select() placeholder = "William" autofocus type="text" value="' . $firstName . '">';
 print '<p class="moderate">Enter your last name</p>';
-print '<input id="lastName" maxlength="45" name="lastName" onfocus=this.select() type="text" value="' . $lastName . '">';
+print '<input id="lastName" maxlength="45" name="lastName" onfocus=this.select() placeholder = "Clark" type="text" value="' . $lastName . '">';
 print '<p class="moderate">Enter your email</p>';
-print '<input id="email" maxlength="45" name="email" onfocus=this.select() type="text" value="' . $email . '">';
+print '<input id="email" maxlength="45" name="email" onfocus=this.select() placeholder = "William.Clark@uvm.edu" type="text" value="' . $email . '">';
 print '<p class="moderate">Select your favorite animal from the list</p>';
 //query to select distinct animal names from tblAnimals
 $distinctAnimalQuery = 'SELECT DISTINCT pmkAnimalName FROM tblAnimals';

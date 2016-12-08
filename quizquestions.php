@@ -12,19 +12,17 @@ $quizQuestionsQuery = 'SELECT fnkRightAnswerAnimalId,fnkUserChoseAnimalName FROM
 $data = array($quizPrimaryKey);
 $questions = $thisDatabaseReader->select($quizQuestionsQuery, $data, 1);
 //begin form
-    print '<fieldset id = "reviewquestions">';
-        print '<form  method = "post" action = "quiz.php">';
+    print '<fieldset class = "reviewquestions">';
+        
+            print '<p class = "xlarge">Review Your Quiz</p>';
+            print '<form  method = "post" action = "quiz.php" id ="mb">';
         //store the user pmk in a hidden input
         print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
         //print submit button
         print '<input type="submit" id="quiz" name="quiz" value="Return to your profile" tabindex="900" class = "button">';
         //end form
         print '</form>';
-            print '<p class = "xlarge">Review Your Quiz</p>';
 if($questions){
-
-    
-
     $numQuestions = 1;
     print '<table>';
     print '<tr>';

@@ -13,7 +13,18 @@ if (isset($_POST["questionsanimals"])) {
     //get wrong answer
     $incorrectKey = htmlentities($_POST["userAnswer"], ENT_QUOTES, "UTF-8");
 }
-    print '<fieldset id = "reviewquestions">';
+print '<fieldset id = "backButton">';
+print '<form  method = "post" action = "quizquestions.php">';
+    //store the user pmk in a hidden input
+    print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
+    //store the user pmk in a hidden input
+    print '<input type="hidden" name="quizPrimaryKey" value="' . $quizPrimaryKey . '">';
+    //print submit button
+    print '<input type="submit" id="quizquestionsbutton" name="quizquestionsbutton" value="Back" tabindex="900" class = "button">';
+    //end form
+    print '</form>';
+    print '</fieldset>';
+    print '<fieldset class = "reviewquestions">';
     print '<div class = "imagetext">';
     print '<label>';
      //display photo
@@ -36,7 +47,7 @@ print '</audio>';
 print '</fieldset>';
 //display photo
 if ($correctKey != $incorrectKey) {
-    print '<fieldset id = "reviewquestions">';
+    print '<fieldset class = "reviewquestions">';
     print '<div class = "imagetext">';
     print '<label>';
      //display photo
@@ -58,17 +69,7 @@ print'Your browser does not support the audio element.';
 print '</audio>';
 print '</fieldset>';
 }
-print '<fieldset id = "backButton">';
-print '<form  method = "post" action = "quizquestions.php">';
-    //store the user pmk in a hidden input
-    print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
-    //store the user pmk in a hidden input
-    print '<input type="hidden" name="quizPrimaryKey" value="' . $quizPrimaryKey . '">';
-    //print submit button
-    print '<input type="submit" id="quizquestionsbutton" name="quizquestionsbutton" value="Back" tabindex="900" class = "button">';
-    //end form
-    print '</form>';
-    print '</fieldset>';
+
 //include footer
 include "footer.php";
 ?>

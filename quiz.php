@@ -16,6 +16,11 @@ $errorMsg = array();
 if (isset($_POST["quiz"])) {
     //get the user id for a new user
     $userPrimaryKey = htmlentities($_POST["userPrimaryKey"], ENT_QUOTES, "UTF-8");
+    //we are going to display the information available about the current user
+    $userAttributesQuery = 'SELECT fldFirstName,fldLastName,fnkFavoriteAnimalName FROM tblUsers WHERE pmkUserId = ?';
+//store the primary key in an array
+    $pmkArray = array($userPrimaryKey);
+    $userAttributes = $thisDatabaseReader->select($userAttributesQuery, $pmkArray, 1);
 }
 //if a user ended a quiz
 if (isset($_POST["endquiz"])) {
@@ -91,7 +96,8 @@ if (!$existsError) {
     $userAttributes = $thisDatabaseReader->select($userAttributesQuery, $pmkArray, 1);
 //display their information
     print '<fieldset id = "userInformation">';
-    print '<p class ="xlarge"><strong>' . $userAttributes[0]['fldFirstName'] . ' ' . $userAttributes[0]['fldLastName'] . '</strong></p>';
+    print '<p class ="xlarge"><strong>' . $userAttributes[0]['fldFirstName'] . '</strong></p>';
+    print '<p class ="xlarge"><strong>'     .   $userAttributes[0]['fldLastName'] . '</strong></p>';
         print '<p class = "xlarge">Level: ' . $userAttributes[0]['fldLevel'] . '</p>';
 //display photo
     print '<img src="photos/' . $userAttributes[0]['fnkFavoriteAnimalName'] . '.jpg" class = "animal" id = "profile">';
@@ -99,14 +105,14 @@ if (!$existsError) {
     print '<p class = "moderate">Email: ' . $userAttributes[0]['fldEmail'] . '</p>';
     print '<p class = "moderate">Account Created: ' . substr($userAttributes[0]['fldDateJoined'], 0, 10) . '</p>';
     if ($userAttributes[0]['fldConfirmed'] == 1) {
-        print '<p class = "moderate">Confirmed: Yes</p>';
+        print '<p class = "moderate">Confirmed: Yes -';
     } else {
-        print '<p class = "moderate">Confirmed: No</p>';
+        print '<p class = "moderate">Confirmed: No -';
     }
     if ($userAttributes[0]['fldApproved'] == 1) {
-        print '<p class = "moderate">Approved: Yes</p>';
+        print ' Approved: Yes</p>';
     } else {
-        print '<p class = "moderate">Approved: No</p>';
+        print ' Approved: No</p>';
     }
 //form to update user information
     print '</fieldset>';
@@ -116,9 +122,9 @@ if (!$existsError) {
     print '<form  method = "post" action = "quiz.php">';
 //let user choose name of quiz
     print '<p class="moderate">Enter a new first name</p>';
-    print '<input id="firstName" maxlength="45" name="firstName" value="' . $firstName . '" onfocus=this.select() type="text">';
+    print '<input id="firstName" maxlength="45" name="firstName" value="' . $userAttributes[0]['fldFirstName'] . '" onfocus=this.select() type="text">';
     print '<p class="moderate">Enter a new last name</p>';
-    print '<input id="lastName" maxlength="45" name="lastName" value="' . $lastName . '" onfocus=this.select() type="text">';
+    print '<input id="lastName" maxlength="45" name="lastName" value="' . $userAttributes[0]['fldLastName'] . '" onfocus=this.select() type="text">';
 //store the user pmk in a hidden input
     print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
     print '<p class="moderate">Select your favorite animal</p>';
@@ -135,7 +141,7 @@ print '<select name="favoriteAnimal">';
                 print ' value ="">Choose your favorite animal</option>';
                 foreach ($animals as $animal) {
                     print '<option';
-                    if ($animal[0] == $favoriteAnimal) {
+                    if ($animal[0] == $userAttributes[0]['fnkFavoriteAnimalName']) {
                         print ' selected="selected"';
                     }
                     print ' value = "';
@@ -162,7 +168,7 @@ print '<select name="favoriteAnimal">';
     print '<form  method = "post" action = "question.php">';
 //let user choose name of quiz
     print '<p class="moderate">Enter your quiz name</p>';
-    print '<input id="quizName" maxlength="45" name="quizName" onfocus=this.select() type="text">';
+    print '<input id="quizName" maxlength="45" name="quizName" placeholder = "My First Quiz" onfocus=this.select() type="text">';
 //store the user pmk in a hidden input
     print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
 //let user choose name of quiz
