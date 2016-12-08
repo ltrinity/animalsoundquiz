@@ -8,8 +8,6 @@ prompt user to select an animal if they have not-->
     function showhide(element) {
         //show the submit button
         document.getElementById("questionSubmitButton").hidden = "";
-        //show the submit button
-        document.getElementById("questionSubmitButtonFieldset").hidden = "";
         //hide the prompt to select an animal
         document.getElementById("promptToPickAnimal").hidden = "hidden";
         //get the id of the element passed in to the function
@@ -54,23 +52,25 @@ if (isset($_POST["quizSubmit"])) {
     $userQuizAttributes = array($userPrimaryKey, $quizPrimaryKey);
     $thisDatabaseWriter->insert($userQuizInsertionQuery, $userQuizAttributes);
 }
+
+
 //we will now get the user level
 $getUserLevelQuery = 'SELECT fldLevel FROM tblUsers WHERE pmkUserId = ?';
 $pmk = array($userPrimaryKey);
 $level = $thisDatabaseReader->select($getUserLevelQuery, $pmk, 1);
-$levelArray = array($quizPrimaryKey, $userPrimaryKey, $level[0][0]);
+$levelArray = array($quizPrimaryKey,  $level[0][0]);
 //We will now create a question
 ////get the last ID created
 //select a random animal and insert it into tblQuestions as a foreign key
-$getRightAnswerAnimalIdQuery = 'INSERT INTO tblQuestions (fnkRightAnswerAnimalId) SELECT pmkAnimalName FROM tblAnimals WHERE pmkAnimalName NOT IN (SELECT fnkRightAnswerAnimalId FROM tblQuestions JOIN tblQuizzesQuestions ON pmkQuestionId = fnkQuestionId JOIN tblQuizzes ON pmkQuizId = tblQuizzesQuestions.fnkQuizId JOIN tblUsersQuizzes ON pmkQuizId = tblUsersQuizzes.fnkQuizId JOIN tblUsers ON pmkUserId = fnkUserId WHERE pmkQuizId = ? AND pmkUserId = ? ) AND tblAnimals.fldLevel = ? ORDER BY RAND()';
-$thisDatabaseWriter->insert($getRightAnswerAnimalIdQuery, $levelArray, 2, 4);
+$getRightAnswerAnimalIdQuery = 'INSERT INTO tblQuestions (fnkRightAnswerAnimalId) SELECT pmkAnimalName FROM tblAnimals WHERE pmkAnimalName NOT IN (SELECT fnkRightAnswerAnimalId FROM tblQuestions JOIN tblQuizzesQuestions ON pmkQuestionId = fnkQuestionId JOIN tblQuizzes ON pmkQuizId = tblQuizzesQuestions.fnkQuizId WHERE pmkQuizId = ?) AND tblAnimals.fldLevel = ? ORDER BY RAND() LIMIT 1';
+$thisDatabaseWriter->insert($getRightAnswerAnimalIdQuery, $levelArray, 2, 3);
 //get the last ID created
 $lastId = array($thisDatabaseWriter->lastInsert());
 //get the sound for the current question based on the animal name of the last inserted id
 $getCorrectAnswerAnimalNameQuery = "SELECT fnkRightAnswerAnimalId from tblQuestions WHERE pmkQuestionId = ?";
 $correctAnimal = $thisDatabaseReader->select($getCorrectAnswerAnimalNameQuery, $lastId, 1);
 print '<fieldset class = "audioFieldset">';
-print '<p class="xlarge" id = "promptToPickAnimal">Click to choose the animal that makes this sound</p>';
+print '<p class="xlarge" id = "promptToPickAnimal">Click to choose an animal</p>';
 //inform user how to hear sound
 print '<p class="moderate">Click the play button to hear the sound again</p>';
 //display the sound for the correct animal
@@ -80,7 +80,7 @@ print $correctAnimal[0][0];
 print '.mp3" type="audio/mpeg">';
 print'Your browser does not support the audio element.';
 print '</audio>';
-print '</fieldset>';
+
 //this query will get two animals that are not the correct animal
 $getIncorrectAnimalsQuery = "SELECT pmkAnimalName FROM tblAnimals WHERE pmkAnimalName != ? AND fldLevel = ? ORDER BY RAND() LIMIT 2";
 $IncorrectAnimalsQueryData = array($correctAnimal[0][0],$level[0][0]);
@@ -98,24 +98,6 @@ $animalsToDisplay = array($correctAnimal[0][0], $incorrectAnimals[0][0], $incorr
 shuffle($animalsToDisplay);
 //begin the form
 print '<form  method = "post" action = "answer.php">';
-//display each animals photo
-foreach ($animalsToDisplay as $animal) {
-    //wrap the image and text in a div
-   print '<div class = "imagetext">';
-    print '<label>';
-    //create a hidden radio button
-    print '<input type="radio" name="animalSelection" onclick="showhide(this)" class="none" value = "' . $animal . '" id = "' . $animal . '"/>';
-    //display photo
-    print '<img src="photos/' . $animal . '.jpg" class = "animal">';
-    //this text will display the animal name under its photo
-    print '<fieldset class = "questionsFieldsets">';
-    print '<span class = "textunder" id = "' . $animal . 'label"><strong>' . $animal . '</strong></span>';
-    print '</fieldset>';
-    print '</label>';
-    print '</div>';
-}
-
-print '<fieldset id = "questionSubmitButtonFieldset" name = "questionSubmitButtonFieldset" hidden = "hidden">';
 
 //print submit button
 print '<input type="submit" id="questionSubmitButton" name="questionSubmitButton" hidden = "hidden" value="Confirm Answer" tabindex="900" class = "button">';
@@ -127,9 +109,29 @@ print '<input type="hidden" name="hiddenCorrectAnimal" value="' . $correctAnimal
 print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
 //store the quiz pmk in a hidden input
 print '<input type="hidden" name="quizPrimaryKey" value="' . $quizPrimaryKey . '">';
+print '</fieldset>';
+//display each animals photo
+foreach ($animalsToDisplay as $animal) {
+    //wrap the image and text in a div
+   print '<div class = "imagetext">';
+    print '<label>';
+    //create a hidden radio button
+    print '<input type="radio" name="animalSelection" onclick="showhide(this)" class="none" value = "' . $animal . '" id = "' . $animal . '"/>';
+    //display photo
+        //this text will display the animal name under its photo
+    print '<fieldset class = "questionsFieldsets">';
+    print '<span class = "textunder" id = "' . $animal . 'label"><strong>' . $animal . '</strong></span>';
+    print '</fieldset>';
+    print '<img src="photos/' . $animal . '.jpg" class = "animal">';
+
+    print '</label>';
+    print '</div>';
+}
+
+
 //end form
 print '</form>';
-print '</fieldset>';
+
 //include footer
 include "footer.php";
 ?>

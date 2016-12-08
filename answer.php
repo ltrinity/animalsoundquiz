@@ -1,4 +1,5 @@
 <?php
+
 //include top
 include "top.php";
 //if the form is submitted post the values
@@ -23,16 +24,27 @@ if (isset($_POST["questionSubmitButton"])) {
         print '<p class="large">Incorrect!</p>';
         print '<p class="large">Answer: ' . $correctAnswer . '</p>';
     }
-    //begin form to start new question
-    print '<form  method = "post" action = "question.php">';
+    $pmkArray = array($userPrimaryKey);
+    //test if we have another question
+    //check for level up
+    $currentLevelQuery = 'SELECT fldLevel FROM tblUsers WHERE pmkUserId = ?';
+    $currentLevel = $thisDatabaseReader->select($currentLevelQuery, $pmkArray, 1);
+    $newQuestionData = array($quizPrimaryKey, $currentLevel[0][0]);
+    $testForQuestionQuery = 'SELECT pmkAnimalName FROM tblAnimals WHERE pmkAnimalName NOT IN (SELECT fnkRightAnswerAnimalId FROM tblQuestions JOIN tblQuizzesQuestions ON pmkQuestionId = fnkQuestionId JOIN tblQuizzes ON pmkQuizId = tblQuizzesQuestions.fnkQuizId WHERE pmkQuizId = ?) AND tblAnimals.fldLevel = ?';
+    $nextQuestion = $thisDatabaseReader->select($testForQuestionQuery, $newQuestionData, 2, 2);
+    if ($nextQuestion[1][0] != "") {
+//begin form to start new question
+        print '<form  method = "post" action = "question.php">';
 //store the user pmk in a hidden input
-    print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
+        print '<input type="hidden" name="userPrimaryKey" value="' . $userPrimaryKey . '">';
 //store the quiz id in a hidden input
-    print '<input type="hidden" name="quizPrimaryKey" value="' . $quizPrimaryKey . '">';
+        print '<input type="hidden" name="quizPrimaryKey" value="' . $quizPrimaryKey . '">';
 //print submit button
-    print '<input type="submit" id="newquestion" name="newquestion" value="Next Question" tabindex="900" class = "button">';
+        print '<input type="submit" id="newquestion" name="newquestion" value="Next Question" tabindex="900" class = "button">';
 //end form
-    print '</form>';
+        print '</form>';
+    }
+
 //begin form to end quiz
     print '<form  method = "post" action = "quiz.php">';
 //store the user pmk in a hidden input
@@ -62,30 +74,41 @@ if (isset($_POST["questionSubmitButton"])) {
     //we will now update tblUsersQuizzes
     $updateNumberQuestionsQuery = 'UPDATE tblUsersQuizzes SET fldTotalQuestions = ?, fldNumberCorrect = ? WHERE fnkUserId = ? AND fnkQuizId = ?';
     $thisDatabaseWriter->update($updateNumberQuestionsQuery, $updateUserQuizData, 1, 1);
-    //check for level up
-    $pmkArray = array($userPrimaryKey);
+
     //get the quizzes the current user has taken
     $quizInformationQuery = 'SELECT SUM(fldNumberCorrect) FROM tblUsersQuizzes JOIN tblQuizzes ON pmkQuizId = fnkQuizId WHERE fnkUserId = ?';
     $quizzes = $thisDatabaseReader->select($quizInformationQuery, $pmkArray, 1);
-    if ($quizzes[0]['SUM(fldNumberCorrect)'] == 5) {
-        $currentLevelQuery = 'SELECT fldLevel FROM tblUsers WHERE pmkUserId = ?';
-        $currentLevel = $thisDatabaseReader->select($currentLevelQuery, $pmkArray, 1);
-        if ($currentLevel[0][0] == 1) {
-            print '<p class ="large">Level Up! Get ready to test your knowledge of big cats.</p>';
-            //we will now update tblUsers
-            $updateLevelQuery = 'UPDATE tblUsers SET fldLevel = 2 WHERE pmkUserId = ?';
-            $thisDatabaseWriter->update($updateLevelQuery, $pmkArray, 1);
-        }
-    }
-    if ($quizzes[0]['SUM(fldNumberCorrect)'] == 10) {
-        $currentLevelQuery = 'SELECT fldLevel FROM tblUsers WHERE pmkUserId = ?';
-        $currentLevel = $thisDatabaseReader->select($currentLevelQuery, $pmkArray, 1);
-        if ($currentLevel[0][0] == 2) {
-            print '<p class="large">Level Up! Get ready to test your knowledge of birds.</p>';
-            //we will now update tblUsers
-            $updateLevelQuery = 'UPDATE tblUsers SET fldLevel = 3 WHERE pmkUserId = ?';
-            $thisDatabaseWriter->update($updateLevelQuery, $pmkArray, 1);
-        }
+    switch ($quizzes[0]['SUM(fldNumberCorrect)']) {
+        case(5):
+            $currentLevelQuery = 'SELECT fldLevel FROM tblUsers WHERE pmkUserId = ?';
+            $currentLevel = $thisDatabaseReader->select($currentLevelQuery, $pmkArray, 1);
+            if ($currentLevel[0][0] == 1) {
+                print '<p class ="xlarge">Level Up!</p>';
+                //we will now update tblUsers
+                $updateLevelQuery = 'UPDATE tblUsers SET fldLevel = 2 WHERE pmkUserId = ?';
+                $thisDatabaseWriter->update($updateLevelQuery, $pmkArray, 1);
+            }
+            break;
+        case(10):
+            $currentLevelQuery = 'SELECT fldLevel FROM tblUsers WHERE pmkUserId = ?';
+            $currentLevel = $thisDatabaseReader->select($currentLevelQuery, $pmkArray, 1);
+            if ($currentLevel[0][0] == 2) {
+                print '<p class="large">Level Up!</p>';
+                //we will now update tblUsers
+                $updateLevelQuery = 'UPDATE tblUsers SET fldLevel = 3 WHERE pmkUserId = ?';
+                $thisDatabaseWriter->update($updateLevelQuery, $pmkArray, 1);
+            }
+            break;
+        case(15):
+            $currentLevelQuery = 'SELECT fldLevel FROM tblUsers WHERE pmkUserId = ?';
+            $currentLevel = $thisDatabaseReader->select($currentLevelQuery, $pmkArray, 1);
+            if ($currentLevel[0][0] == 3) {
+                print '<p class="large">Level Up!</p>';
+                //we will now update tblUsers
+                $updateLevelQuery = 'UPDATE tblUsers SET fldLevel = 4 WHERE pmkUserId = ?';
+                $thisDatabaseWriter->update($updateLevelQuery, $pmkArray, 1);
+            }
+            break;
     }
     print '</fieldset>';
     //display photo

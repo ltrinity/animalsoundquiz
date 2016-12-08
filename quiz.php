@@ -92,9 +92,10 @@ if (!$existsError) {
 //display their information
     print '<fieldset id = "userInformation">';
     print '<p class ="xlarge"><strong>' . $userAttributes[0]['fldFirstName'] . ' ' . $userAttributes[0]['fldLastName'] . '</strong></p>';
+        print '<p class = "xlarge">Level: ' . $userAttributes[0]['fldLevel'] . '</p>';
 //display photo
     print '<img src="photos/' . $userAttributes[0]['fnkFavoriteAnimalName'] . '.jpg" class = "animal" id = "profile">';
-    print '<p class = "moderate">Level: ' . $userAttributes[0]['fldLevel'] . '</p>';
+
     print '<p class = "moderate">Email: ' . $userAttributes[0]['fldEmail'] . '</p>';
     print '<p class = "moderate">Account Created: ' . substr($userAttributes[0]['fldDateJoined'], 0, 10) . '</p>';
     if ($userAttributes[0]['fldConfirmed'] == 1) {

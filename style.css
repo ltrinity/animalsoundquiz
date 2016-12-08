@@ -243,9 +243,10 @@ footer{
     background-color: royalblue;
     color:white;
     margin-bottom:10px;
+    margin-left:0px;
+    margin-right:0px;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+    width:700px;
     display:inline;
 }
 .questionsFieldsets{
@@ -260,16 +261,6 @@ footer{
     margin-right: auto;
     width:275px;
 }
-#questionSubmitButtonFieldset{
-    border-style: solid;
-    border-color: white;
-    border-radius: 32px;
-    background-color: royalblue;
-    color:white;
-    width:275px;
-    margin-left:330px;
-    margin-bottom:10px;
-}
 #answerPageFS{
     border-style: solid;
     border-color: white;
@@ -278,6 +269,7 @@ footer{
     color:white;
     display:inline;
         width:350px;
+        min-height:285px;
 }
 #newquestion{
     margin-bottom:10px;
@@ -288,4 +280,10 @@ footer{
     border-radius: 32px;
     background-color: royalblue;
     display:inherit;
+}
+#questionSubmitButton{
+    margin-top:10px;
+}
+#extrawide{
+    width:1200px;
 }
